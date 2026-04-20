@@ -1,0 +1,119 @@
+================================================================================
+  PORTFOLIO BALAKUMAR DJEASSI — DOCUMENT DE REPRISE
+  À fournir à Claude au début de chaque session
+================================================================================
+
+REPO GITHUB
+-----------
+https://github.com/BalakumarDjeassittarame/portfolio.git
+
+Cloner : git clone https://github.com/BalakumarDjeassittarame/portfolio.git
+Fichier principal : portfolio/index.html (TOUT est dans ce fichier unique)
+Fichier de référence : portfolio-v2/index.html (ancienne version, ne pas modifier)
+
+
+IDENTITÉ
+--------
+Nom complet : Balakumar Djeassi (dit "Balak")
+Métier : Product Designer
+Ville : Paris, France
+Email : balakumar.d@icloud.com
+LinkedIn : https://www.linkedin.com/in/balakumar-djeassittarame/
+
+
+STACK TECHNIQUE
+---------------
+- Fichier unique HTML+CSS+JS (pas de framework, pas de build)
+- Police : Bricolage Grotesque (Google Fonts, variable font)
+- Effet de fond : LiquidEther — simulation fluide WebGL (Navier-Stokes)
+  via Three.js r160 (CDN). mix-blend-mode: screen sur #fluid-bg.
+- Background : #0e0e1f (violet sombre)
+- Palette : --purple #7c3aed / --purple-soft #a78bfa / --cyan #06b6d4
+- Serveur local : npx serve portfolio -l 3000
+
+
+SECTIONS DU SITE (dans l'ordre)
+--------------------------------
+1. INTRO SCREEN (#intro-screen)
+   - Animation cinématique au chargement
+   - "Balakumar" en grand avec dégradé violet→cyan
+   - Sous-titre : "Bienvenue sur mon portfolio"
+   - Barre de progression puis slide-up vers le haut
+
+2. HERO (#hero)
+   - Nom "Balak / Djeassi" en très grand
+   - Sous-titre, boutons CTA, stats (4+ ans, 10+ projets)
+   - Scroll indicator
+
+3. MARQUEE
+   - Bande défilante avec les compétences
+
+4. WORK (#work)
+   - 4 projets en format ACCORDION (lignes qui s'ouvrent au hover)
+   - Tags TOUJOURS visibles (barre permanente sous le titre)
+   - Au hover : description + lien apparaissent avec animation fade+slide
+   - Projets : Aura (mobile/well-being), Nexus (B2B SaaS),
+               Bloom (e-commerce), Strio (productivité)
+
+5. SKILLS (#skills)
+   - Grille 3 colonnes : UX Design / UI Design / Stratégie & Dev
+
+6. EXPERIENCE (#experience) — appelé "Parcours" dans la nav
+   - Grille 2 COLONNES (pas de timeline verticale) :
+     Gauche : 5 expériences pro (Altavia, Mayamen, TresOrient, MADRIR x2)
+     Droite  : 3 formations (IIM, EFREI, Gustave Eiffel)
+
+7. CONTACT (#contact)
+   - Email + LinkedIn
+
+
+CE QUI A ÉTÉ FAIT
+------------------
+✅ Structure HTML/CSS/JS complète en fichier unique
+✅ Effet LiquidEther WebGL (fluid simulation) en fond
+✅ Intro cinématique avec animation clip-path + progress bar
+✅ Curseur personnalisé
+✅ Marquee défilant
+✅ Section Work : accordion rows (remplacé bento grid)
+✅ Section Skills : 3 colonnes avec chips interactives
+✅ Section Parcours : grille 2 colonnes (remplacé timeline verticale)
+✅ IntersectionObserver pour scroll reveals
+✅ Parallaxe légère sur le hero
+✅ Responsive (mobile géré)
+✅ --ease: cubic-bezier(0.16,1,0.3,1) défini dans :root
+
+
+CE QUI RESTE À FAIRE / PISTES D'AMÉLIORATION
+----------------------------------------------
+⬜ Animation hover accordion : le fade-in du texte au survol
+  a été codé mais n'était pas encore confirmé visuellement
+  (ajouter transition opacity+translateY sur .proj-expand-inner)
+  → vérifier que --ease est bien pris en compte dans le navigateur
+
+⬜ Ajouter de vrais visuels/mockups pour les projets (actuellement vide)
+
+⬜ Page ou modale de détail projet (clic sur "Voir le projet")
+
+⬜ Version mobile à peaufiner (vérifier accordion et grille expérience)
+
+⬜ Déploiement en ligne (GitHub Pages, Vercel ou Netlify)
+  → Pour GitHub Pages : activer dans Settings > Pages > branch main /portfolio
+
+⬜ Ajouter un CV téléchargeable (PDF)
+
+⬜ Métadonnées SEO (og:image, description, etc.)
+
+
+NOTES IMPORTANTES POUR CLAUDE
+-------------------------------
+- NE PAS toucher à portfolio-v2/ (version de référence uniquement)
+- Le fichier portfolio/index.html est auto-suffisant, tout est dedans
+- LiquidEther utilise Three.js r160 — ne pas changer la version CDN
+- mix-blend-mode: screen sur #fluid-bg est CRUCIAL pour que le fond
+  noir du canvas WebGL soit transparent (le supprimer = fond noir)
+- Les couleurs fluid : ['#1e0a5e','#6d28d9','#8b5cf6','#0ea5e9','#67e8f9']
+  (pas de rouge/rose — l'utilisateur n'aime pas)
+- Police Bricolage Grotesque PARTOUT (pas Space Grotesk ni Syne)
+- L'utilisateur préfère les animations subtiles (pas "boîte de nuit")
+
+================================================================================
