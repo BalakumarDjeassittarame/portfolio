@@ -372,6 +372,25 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
   const backdrop = modal.querySelector('.pm-backdrop');
   const closeBtn = modal.querySelector('.pm-close');
   const iframe   = document.getElementById('pm-iframe');
+  const pmRight  = modal.querySelector('.pm-right');
+  const pmLeft   = modal.querySelector('.pm-left');
+  const cursorEl = document.getElementById('cursor');
+
+  // Curseur : masquer quand on entre dans l'iframe (cross-origin = plus de mousemove)
+  function hideCursor() {
+    cursorEl.style.opacity = '0';
+    cursorEl.style.transition = 'opacity 0.15s';
+  }
+  function showCursor() {
+    cursorEl.style.opacity = '1';
+    cursorEl.style.transition = 'opacity 0.25s';
+  }
+
+  pmRight.addEventListener('mouseenter', hideCursor);
+  // Restaurer quand la souris revient sur le panneau gauche
+  pmLeft.addEventListener('mouseenter', showCursor);
+  // Sécurité : si la souris quitte la modal entièrement
+  modal.addEventListener('mouseleave', showCursor);
 
   function openModal(row) {
     const name     = row.querySelector('.proj-name').textContent.trim();
@@ -410,6 +429,7 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
   function closeModal() {
     modal.classList.remove('open');
     document.body.style.overflow = '';
+    showCursor(); // toujours restaurer le curseur à la fermeture
     setTimeout(() => { iframe.src = ''; }, 400);
   }
 
