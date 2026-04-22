@@ -366,6 +366,71 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
 })();
 
 
+// ── PROJECT MODAL ──
+(function() {
+  const modal    = document.getElementById('proj-modal');
+  const backdrop = modal.querySelector('.pm-backdrop');
+  const closeBtn = modal.querySelector('.pm-close');
+  const iframe   = document.getElementById('pm-iframe');
+
+  function openModal(row) {
+    const name     = row.querySelector('.proj-name').textContent.trim();
+    const cat      = row.querySelector('.proj-cat').textContent.trim();
+    const yr       = row.querySelector('.proj-yr').textContent.trim();
+    const desc     = row.querySelector('.proj-desc')?.textContent.trim() || '';
+    const tags     = [...row.querySelectorAll('.ptag')].map(t => t.textContent.trim());
+    const figmaUrl = row.dataset.figma || '';
+
+    document.getElementById('pm-name').textContent = name;
+    document.getElementById('pm-cat').textContent  = cat;
+    document.getElementById('pm-yr').textContent   = yr;
+    document.getElementById('pm-desc').textContent = desc;
+
+    // Tags
+    const tagsEl = document.getElementById('pm-tags');
+    tagsEl.innerHTML = tags.map(t => `<span class="pm-tag">${t}</span>`).join('');
+
+    // Figma embed
+    if (figmaUrl) {
+      const embedUrl = `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(figmaUrl)}`;
+      iframe.src = embedUrl;
+      document.getElementById('pm-figma-btn').href = figmaUrl;
+      document.getElementById('pm-figma-btn').style.display = 'inline-flex';
+      iframe.style.display = 'block';
+    } else {
+      iframe.src = '';
+      iframe.style.display = 'none';
+      document.getElementById('pm-figma-btn').style.display = 'none';
+    }
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { iframe.src = ''; }, 400);
+  }
+
+  // Ouvrir au clic sur "Voir le projet / prototype"
+  document.querySelectorAll('.proj-open-modal, .proj-link').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const row = btn.closest('.proj-row');
+      if (row) openModal(row);
+    });
+  });
+
+  // Fermer
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+})();
+
+
 // ── SCROLL REVEAL ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
