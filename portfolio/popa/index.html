@@ -103,20 +103,20 @@
     /* ── CARD SWAP ── */
     .cs-hero-right {
       display: flex; align-items: center; justify-content: center;
-      min-height: 800px;
+      min-height: 600px;
       opacity: 0; animation: fadeUp 0.9s 0.45s var(--ease) forwards;
     }
     .card-swap-wrap {
       position: relative;
-      width: 600px; height: 820px;
+      width: 720px; height: 500px;
       perspective: 1400px;
       overflow: visible;
     }
     .card-swap-wrap .card {
       position: absolute;
       top: 50%; left: 50%;
-      width: 580px; height: 800px;
-      border-radius: 20px;
+      width: 700px; height: 480px;
+      border-radius: 14px;
       border: 1px solid rgba(249,115,22,0.2);
       background: #fff;
       transform-style: preserve-3d;
@@ -124,7 +124,7 @@
       backface-visibility: hidden;
       overflow: hidden;
       cursor: pointer;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.6);
     }
     .card-img {
       width: 100%; height: 100%;
@@ -314,7 +314,7 @@
       const wrap  = document.getElementById('card-swap-wrap');
       const cards = Array.from(wrap.querySelectorAll('.card'));
       const total = cards.length;
-      const distX = 36, distY = 44, skew = 4, delay = 2800;
+      const distX = 28, distY = 26, skew = 3, delay = 2800;
 
       const slot = i => ({
         x: i * distX, y: -i * distY, z: -i * distX * 1.5, zIndex: total - i
