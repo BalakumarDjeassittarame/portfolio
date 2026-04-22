@@ -434,7 +434,7 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
 // ── NAV ACTIVE STATE ──
 (function() {
   const navLinks = document.querySelectorAll('nav a[href^="#"]');
-  const sections = document.querySelectorAll('section[id]');
+  const sectionIds = ['work', 'skills', 'experience', 'contact'];
 
   const setActive = (id) => {
     navLinks.forEach(l => l.classList.remove('nav-active'));
@@ -442,16 +442,20 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
     if (active) active.classList.add('nav-active');
   };
 
-  const navObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) setActive(entry.target.id);
+  const updateNav = () => {
+    // La section active = la dernière dont le haut est passé la moitié du viewport
+    const trigger = window.scrollY + window.innerHeight * 0.45;
+    let current = null;
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.offsetTop <= trigger) current = id;
     });
-  }, {
-    threshold: 0,
-    rootMargin: '-30% 0px -60% 0px'
-  });
+    if (current) setActive(current);
+    else navLinks.forEach(l => l.classList.remove('nav-active'));
+  };
 
-  sections.forEach(s => navObserver.observe(s));
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav(); // état initial
 })();
 
 // ── SCROLL REVEAL ──
