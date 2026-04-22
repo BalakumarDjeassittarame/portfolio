@@ -438,12 +438,16 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
     setTimeout(() => { iframe.src = ''; }, 400);
   }
 
-  // Ouvrir au clic sur "Voir le projet / prototype"
+  // Ouvrir la modal uniquement si la row a un prototype Figma (data-figma)
+  // Sinon laisser le lien naviguer normalement (ex: Fliq → fliq/index.html)
   document.querySelectorAll('.proj-open-modal, .proj-link').forEach(btn => {
     btn.addEventListener('click', e => {
-      e.preventDefault();
       const row = btn.closest('.proj-row');
-      if (row) openModal(row);
+      if (row && row.dataset.figma) {
+        e.preventDefault();
+        openModal(row);
+      }
+      // pas de preventDefault → navigation normale pour les autres projets
     });
   });
 
