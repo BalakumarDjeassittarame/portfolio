@@ -9,9 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -373,31 +372,14 @@
     <span class="cs-footer-right">Fliq · Case Study · 2025</span>
   </footer>
 
+  <!-- Composants pré-compilés (JSX → JS via Babel offline) -->
+  <script src="fliq-screens.js"></script>
+  <script src="fliq-screens-2.js"></script>
+  <script src="fliq-screens-3.js"></script>
+  <script src="fliq-screens-4.js"></script>
+
   <script>
-  // Charge les JSX via fetch → compile avec Babel → eval dans le bon ordre
-  (async function() {
-    const JSX_FILES = [
-      'fliq-screens.jsx',
-      'fliq-screens-2.jsx',
-      'fliq-screens-3.jsx',
-      'fliq-screens-4.jsx',
-    ];
-
-    for (const src of JSX_FILES) {
-      try {
-        const code = await fetch(src).then(r => {
-          if (!r.ok) throw new Error(r.status);
-          return r.text();
-        });
-        const compiled = Babel.transform(code, { presets: ['react'] }).code;
-        // eslint-disable-next-line no-eval
-        (0, eval)(compiled);
-      } catch (e) {
-        console.error('Fliq: failed to load', src, e);
-      }
-    }
-
-    // PhoneShell — en JS pur (pas besoin de JSX)
+    // PhoneShell — wrapper téléphone (JS pur)
     window.PhoneShell = function PhoneShell({ children }) {
       return React.createElement('div', {
         style: {
@@ -414,7 +396,6 @@
             WebkitFontSmoothing: 'antialiased',
           }
         },
-          // Dynamic Island
           React.createElement('div', {
             style: {
               position: 'absolute', top: 12, left: '50%',
@@ -428,32 +409,31 @@
       ));
     };
 
-    // Rendu de chaque écran
+    // Rendu de tous les écrans
     const SCREENS = {
-      s1:  'Screen1Splash',    s2:  'Screen2Intentions', s3:  'Screen3Origins',
-      s4:  'Screen4Profile',   s5:  'Screen5Swipe',      s6:  'Screen6Liking',
-      s7:  'Screen7Onboarding',s8:  'Screen8Match',      s9:  'Screen9Profile',
-      s10: 'Screen10ChatList', s11: 'Screen11Chat',      s12: 'Screen12Filters',
-      s13: 'Screen13Premium',  s14: 'Screen14Stats',     s15: 'Screen15Empty',
-      s16: 'Screen16Verify',   s17: 'Screen17Settings',  s18: 'Screen18Notifications',
-      s19: 'Screen19SuperLike',s20: 'Screen20Report',    s21: 'Screen21ProfileEdit',
+      s1:'Screen1Splash', s2:'Screen2Intentions', s3:'Screen3Origins',
+      s4:'Screen4Profile', s5:'Screen5Swipe', s6:'Screen6Liking',
+      s7:'Screen7Onboarding', s8:'Screen8Match', s9:'Screen9Profile',
+      s10:'Screen10ChatList', s11:'Screen11Chat', s12:'Screen12Filters',
+      s13:'Screen13Premium', s14:'Screen14Stats', s15:'Screen15Empty',
+      s16:'Screen16Verify', s17:'Screen17Settings', s18:'Screen18Notifications',
+      s19:'Screen19SuperLike', s20:'Screen20Report', s21:'Screen21ProfileEdit',
     };
 
     Object.entries(SCREENS).forEach(([id, name]) => {
       const el = document.getElementById(id);
       const Comp = window[name];
-      if (!el || !Comp) return;
+      if (!el || !Comp) { console.warn('Missing:', id, name); return; }
       ReactDOM.createRoot(el).render(
         React.createElement(window.PhoneShell, null, React.createElement(Comp, null))
       );
     });
 
-    // Scroll reveal sections
+    // Scroll reveal
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08 });
     document.querySelectorAll('.cs-section').forEach(el => obs.observe(el));
-  })();
   </script>
 
 </body>
