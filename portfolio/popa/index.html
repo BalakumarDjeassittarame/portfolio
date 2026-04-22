@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
@@ -18,6 +19,7 @@
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
 
+    /* ── NAV ── */
     .cs-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -40,65 +42,171 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
-    /* Bouton sticky */
+    /* ── HERO ── */
+    .cs-hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 8vw 80px;
+      gap: 60px;
+      position: relative; overflow: hidden;
+    }
+    .cs-glow1 { position: absolute; top: -20%; right: -10%; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(ellipse, rgba(249,115,22,0.1), transparent 65%); pointer-events: none; }
+    .cs-glow2 { position: absolute; bottom: 0; left: 0; width: 500px; height: 400px; background: radial-gradient(ellipse, rgba(251,191,36,0.05), transparent 65%); pointer-events: none; }
+
+    .cs-hero-left {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 28px;
+      opacity: 0; animation: fadeUp 0.9s 0.2s var(--ease) forwards;
+    }
+
+    /* Tags row */
+    .cs-tags-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .cs-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--orange); border: 1px solid rgba(249,115,22,0.3);
+      padding: 6px 16px; border-radius: 100px;
+    }
+    .cs-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.6);} }
+    .cs-tag-pill {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+      color: var(--muted); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 100px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .cs-title {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+      font-size: clamp(72px, 11vw, 160px); letter-spacing: -0.04em; line-height: 0.9;
+      background: linear-gradient(135deg, #fff 0%, var(--orange) 45%, var(--amber) 80%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .cs-tagline {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500;
+      font-size: clamp(16px, 1.8vw, 22px); color: var(--muted); max-width: 420px; line-height: 1.5;
+    }
+    .cs-tagline strong { color: var(--text); font-weight: 600; }
+
+    /* Bouton prototype inline */
     .proto-btn {
-      position: fixed; bottom: 32px; right: 32px; z-index: 90;
       display: inline-flex; align-items: center; gap: 10px;
       font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 700;
       color: #fff; cursor: pointer; border: none;
       padding: 14px 28px; border-radius: 100px;
       background: linear-gradient(135deg, var(--orange), var(--amber));
-      box-shadow: 0 8px 32px rgba(249,115,22,0.4);
+      box-shadow: 0 8px 32px rgba(249,115,22,0.35);
       transition: transform 0.25s var(--ease), box-shadow 0.25s;
-      opacity: 0; animation: fadeUp 0.7s 1s var(--ease) forwards;
     }
     .proto-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 40px rgba(249,115,22,0.55); }
 
-    .cs-hero {
-      min-height: 100vh; display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start;
-      padding: 120px 8vw 80px; position: relative; overflow: hidden;
+    /* ── CARD SWAP ── */
+    .cs-hero-right {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 520px;
+      opacity: 0; animation: fadeUp 0.9s 0.45s var(--ease) forwards;
     }
-    .cs-glow1 { position: absolute; top: -20%; right: -10%; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(ellipse, rgba(249,115,22,0.1), transparent 65%); pointer-events: none; }
-    .cs-glow2 { position: absolute; bottom: 0; left: 0; width: 500px; height: 400px; background: radial-gradient(ellipse, rgba(251,191,36,0.05), transparent 65%); pointer-events: none; }
-
-    .cs-label {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--orange); border: 1px solid rgba(249,115,22,0.3);
-      padding: 6px 16px; border-radius: 100px; margin-bottom: 32px;
-      opacity: 0; animation: fadeUp 0.7s 0.2s var(--ease) forwards;
+    .card-swap-wrap {
+      position: relative;
+      width: 280px; height: 440px;
+      perspective: 900px;
+      overflow: visible;
     }
-    .cs-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.6);} }
+    .card-swap-wrap .card {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 270px; height: 390px;
+      border-radius: 18px;
+      border: 1px solid rgba(249,115,22,0.18);
+      background: #120c06;
+      transform-style: preserve-3d;
+      will-change: transform;
+      backface-visibility: hidden;
+      overflow: hidden;
+      cursor: pointer;
+    }
 
-    .cs-title {
-      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
-      font-size: clamp(80px, 14vw, 200px); letter-spacing: -0.04em; line-height: 0.9;
-      background: linear-gradient(135deg, #fff 0%, var(--orange) 45%, var(--amber) 80%);
+    /* Card inner screen content */
+    .card-screen { width: 100%; height: 100%; display: flex; flex-direction: column; background: linear-gradient(160deg, #1e1008 0%, #0d0a07 100%); }
+    .card-topbar {
+      height: 34px; background: rgba(249,115,22,0.07);
+      border-bottom: 1px solid rgba(249,115,22,0.1);
+      display: flex; align-items: center; padding: 0 12px; gap: 5px; flex-shrink: 0;
+    }
+    .card-topbar-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(249,115,22,0.35); }
+    .card-topbar-logo {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 11px;
+      background: linear-gradient(135deg, var(--orange), var(--amber));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 32px; opacity: 0; animation: fadeUp 0.9s 0.35s var(--ease) forwards;
+      margin-left: auto; margin-right: 4px;
     }
-    .cs-hero-bottom {
-      display: flex; align-items: flex-end; justify-content: space-between; width: 100%; gap: 48px;
-      opacity: 0; animation: fadeUp 0.9s 0.55s var(--ease) forwards;
-    }
-    .cs-tagline { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; font-size: clamp(18px,2.5vw,30px); color: var(--muted); max-width: 520px; line-height: 1.4; }
-    .cs-tagline strong { color: var(--text); font-weight: 600; }
-    .cs-meta { display: flex; flex-direction: column; gap: 12px; text-align: right; flex-shrink: 0; }
-    .cs-meta-item { display: flex; align-items: center; gap: 8px; justify-content: flex-end; font-size: 12px; color: var(--muted); }
-    .cs-meta-val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); }
+    .card-body { flex: 1; padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
 
+    /* Screen 1 — Accueil */
+    .card-hero-block {
+      background: linear-gradient(135deg, rgba(249,115,22,0.14), rgba(251,191,36,0.07));
+      border: 1px solid rgba(249,115,22,0.12);
+      border-radius: 10px; padding: 16px 14px;
+      display: flex; flex-direction: column; gap: 7px; flex: 1.4;
+    }
+    .c-line { height: 9px; border-radius: 5px; background: rgba(249,115,22,0.55); width: 55%; }
+    .c-line.w80 { height: 7px; width: 78%; background: rgba(255,255,255,0.13); }
+    .c-line.w45 { height: 7px; width: 45%; background: rgba(255,255,255,0.08); }
+    .c-btn { height: 24px; border-radius: 100px; background: linear-gradient(90deg,rgba(249,115,22,0.7),rgba(251,191,36,0.5)); width: 48%; margin-top: 4px; }
+    .card-prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; flex: 1; }
+    .card-prod {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 7px; display: flex; flex-direction: column; gap: 5px;
+    }
+    .card-prod-img { flex: 1; border-radius: 5px; background: rgba(249,115,22,0.1); min-height: 36px; }
+    .card-prod-price { height: 5px; width: 48%; border-radius: 4px; background: rgba(249,115,22,0.45); }
+    .card-prod-tag { height: 5px; width: 68%; border-radius: 4px; background: rgba(255,255,255,0.09); }
+
+    /* Screen 2 — Catalogue */
+    .card-section-label { height: 6px; border-radius: 4px; background: rgba(249,115,22,0.45); width: 38%; }
+    .card-cat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; flex: 1; }
+    .card-cat-item {
+      border-radius: 7px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .card-cat-item:nth-child(1) { background: rgba(249,115,22,0.13); }
+    .card-cat-item:nth-child(5) { background: rgba(251,191,36,0.09); }
+    .card-cat-item:nth-child(8) { background: rgba(249,115,22,0.08); }
+    .card-filter-row { display: flex; gap: 5px; margin-bottom: 2px; }
+    .card-filter-chip { height: 18px; border-radius: 100px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); flex: 1; }
+    .card-filter-chip:first-child { background: rgba(249,115,22,0.18); border-color: rgba(249,115,22,0.25); }
+
+    /* Screen 3 — Fiche produit */
+    .card-detail-img {
+      height: 110px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(249,115,22,0.18), rgba(251,191,36,0.09));
+      border: 1px solid rgba(249,115,22,0.14);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-detail-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(249,115,22,0.3); }
+    .card-info-rows { display: flex; flex-direction: column; gap: 5px; }
+    .ci { height: 7px; border-radius: 4px; }
+    .ci.accent { background: linear-gradient(90deg, var(--orange), var(--amber)); width: 65%; }
+    .ci.mid { background: rgba(255,255,255,0.13); width: 85%; }
+    .ci.short { background: rgba(249,115,22,0.35); width: 42%; }
+    .card-size-row { display: flex; gap: 6px; margin-top: 2px; }
+    .card-size-chip { height: 20px; border-radius: 6px; flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09); }
+    .card-size-chip:nth-child(2) { background: rgba(249,115,22,0.2); border-color: rgba(249,115,22,0.3); }
+    .card-add-btn { height: 28px; border-radius: 100px; background: linear-gradient(135deg,rgba(249,115,22,0.8),rgba(251,191,36,0.6)); margin-top: 2px; }
+
+    /* ── BRIEF STRIP ── */
     .cs-brief {
       border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
       display: grid; grid-template-columns: repeat(4,1fr);
-      opacity: 0; animation: fadeUp 0.8s 0.75s var(--ease) forwards;
+      opacity: 0; animation: fadeUp 0.8s 0.7s var(--ease) forwards;
     }
     .cs-brief-item { padding: 36px 8vw; border-right: 1px solid var(--border); }
     .cs-brief-item:last-child { border-right: none; }
     .cs-brief-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
     .cs-brief-val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); line-height: 1.4; }
 
+    /* ── SECTIONS ── */
     .cs-section {
       padding: 120px 8vw; border-top: 1px solid var(--border);
       opacity: 0; transform: translateY(40px);
@@ -117,7 +225,7 @@
     }
     .figma-showcase iframe { width: 100%; height: 100%; border: none; display: block; }
 
-    /* Overlay prototype plein écran */
+    /* ── OVERLAY ── */
     #proto-overlay {
       position: fixed; inset: 0; z-index: 9000;
       opacity: 0; visibility: hidden;
@@ -150,11 +258,12 @@
     .ov-iframe { flex: 1; }
     .ov-iframe iframe { width: 100%; height: 100%; border: none; display: block; }
 
+    /* ── FOOTER ── */
     .cs-footer { border-top: 1px solid var(--border); padding: 48px 8vw; display: flex; align-items: center; justify-content: space-between; }
     .cs-footer-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 14px; background: linear-gradient(135deg, var(--orange), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .cs-footer-right { font-size: 12px; color: var(--muted); }
 
-    @keyframes fadeUp { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;} }
   </style>
 </head>
 <body>
@@ -167,23 +276,119 @@
     <span class="cs-nav-tag">Popa · Case Study</span>
   </nav>
 
-  <button class="proto-btn" id="proto-trigger">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-    Tester le prototype
-  </button>
-
   <section class="cs-hero">
     <div class="cs-glow1"></div>
     <div class="cs-glow2"></div>
-    <div class="cs-label"><span class="cs-dot"></span>Case Study · 2025</div>
-    <h1 class="cs-title">Popa</h1>
-    <div class="cs-hero-bottom">
+
+    <!-- Colonne gauche -->
+    <div class="cs-hero-left">
+      <div class="cs-tags-row">
+        <div class="cs-label"><span class="cs-dot"></span>Case Study · 2025</div>
+        <span class="cs-tag-pill">13 écrans</span>
+        <span class="cs-tag-pill">Web · Desktop</span>
+        <span class="cs-tag-pill">UX/UI Design</span>
+        <span class="cs-tag-pill">Figma</span>
+      </div>
+
+      <h1 class="cs-title">Popa</h1>
+
       <p class="cs-tagline">Un site e-commerce dédié aux <strong>figurines et pop vinyl</strong> éditions limitées — de la culture pop au panier d'achat.</p>
-      <div class="cs-meta">
-        <div class="cs-meta-item"><span class="cs-meta-val">13</span> écrans</div>
-        <div class="cs-meta-item"><span class="cs-meta-val">Web</span> · Desktop</div>
-        <div class="cs-meta-item"><span class="cs-meta-val">UX/UI</span> Design</div>
-        <div class="cs-meta-item"><span class="cs-meta-val">Figma</span> · 2025</div>
+
+      <button class="proto-btn" id="proto-trigger">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Tester le prototype
+      </button>
+    </div>
+
+    <!-- Colonne droite — Card Swap -->
+    <div class="cs-hero-right">
+      <div class="card-swap-wrap" id="card-swap-wrap">
+
+        <!-- Card 1 : Accueil -->
+        <div class="card">
+          <div class="card-screen">
+            <div class="card-topbar">
+              <div class="card-topbar-dot"></div>
+              <div class="card-topbar-dot"></div>
+              <div class="card-topbar-dot"></div>
+              <div class="card-topbar-logo">Popa</div>
+            </div>
+            <div class="card-body">
+              <div class="card-hero-block">
+                <div class="c-line"></div>
+                <div class="c-line w80"></div>
+                <div class="c-line w45"></div>
+                <div class="c-btn"></div>
+              </div>
+              <div class="card-prod-grid">
+                <div class="card-prod"><div class="card-prod-img"></div><div class="card-prod-price"></div><div class="card-prod-tag"></div></div>
+                <div class="card-prod"><div class="card-prod-img"></div><div class="card-prod-price"></div><div class="card-prod-tag"></div></div>
+                <div class="card-prod"><div class="card-prod-img"></div><div class="card-prod-price"></div></div>
+                <div class="card-prod"><div class="card-prod-img"></div><div class="card-prod-price"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 : Catalogue -->
+        <div class="card">
+          <div class="card-screen">
+            <div class="card-topbar">
+              <div class="card-topbar-dot"></div>
+              <div class="card-topbar-dot"></div>
+              <div class="card-topbar-dot"></div>
+              <div class="card-topbar-logo">Popa</div>
+            </div>
+            <div class="card-body">
+              <div class="card-section-label"></div>
+              <div class="card-filter-row">
+                <div class="card-filter-chip"></div>
+                <div class="card-filter-chip"></div>
+                <div class="card-filter-chip"></div>
+                <div class="card-filter-chip"></div>
+              </div>
+              <div class="card-cat-grid">
+                <div class="card-cat-item"></div>
+                <div class="card-cat-item"></div>
+                <div class="card-cat-item"></div>
+                <div class="card-cat-item"></div>
+                <div class="card-cat-item"></div>
+                <div class="card-cat-item"></div>
+                <div class="card-cat-item"></div>
+                <div class="card-cat-item"></div>
+                <div class="card-cat-item"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 : Fiche produit -->
+        <div class="card">
+          <div class="card-screen">
+            <div class="card-topbar">
+              <div class="card-topbar-dot"></div>
+              <div class="card-topbar-dot"></div>
+              <div class="card-topbar-dot"></div>
+              <div class="card-topbar-logo">Popa</div>
+            </div>
+            <div class="card-body">
+              <div class="card-detail-img"><div class="card-detail-icon"></div></div>
+              <div class="card-info-rows">
+                <div class="ci accent"></div>
+                <div class="ci mid"></div>
+                <div class="ci short"></div>
+              </div>
+              <div class="card-size-row">
+                <div class="card-size-chip"></div>
+                <div class="card-size-chip"></div>
+                <div class="card-size-chip"></div>
+                <div class="card-size-chip"></div>
+              </div>
+              <div class="card-add-btn"></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -225,23 +430,70 @@
   </div>
 
   <script>
-    const overlay  = document.getElementById('proto-overlay');
-    const iframe   = document.getElementById('ov-iframe');
-    const FIGMA    = 'https://www.figma.com/embed?embed_host=share&url=' +
+    // ── Prototype overlay ──
+    const overlay = document.getElementById('proto-overlay');
+    const ovIframe = document.getElementById('ov-iframe');
+    const FIGMA = 'https://www.figma.com/embed?embed_host=share&url=' +
       encodeURIComponent('https://www.figma.com/proto/AMr5Q4Vwsa0FR4S53XTPBt/Balakumar_Djeassittarame_POPA?node-id=1-2&scaling=scale-down-width&page-id=0:1');
 
-    function openOv()  { iframe.src = FIGMA; overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
-    function closeOv() { overlay.classList.remove('open'); document.body.style.overflow = ''; setTimeout(() => { iframe.src = ''; }, 400); }
+    function openOv()  { ovIframe.src = FIGMA; overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeOv() { overlay.classList.remove('open'); document.body.style.overflow = ''; setTimeout(() => { ovIframe.src = ''; }, 400); }
 
     document.getElementById('proto-trigger').addEventListener('click', openOv);
     document.getElementById('ov-close').addEventListener('click', closeOv);
     document.getElementById('ov-backdrop').addEventListener('click', closeOv);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOv(); });
 
+    // ── Scroll reveal ──
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.cs-section').forEach(el => obs.observe(el));
+
+    // ── Card Swap (vanilla GSAP) ──
+    (function() {
+      const wrap  = document.getElementById('card-swap-wrap');
+      const cards = Array.from(wrap.querySelectorAll('.card'));
+      const total = cards.length;
+      const distX = 52, distY = 60, skew = 5, delay = 2800;
+
+      const slot = i => ({
+        x: i * distX, y: -i * distY, z: -i * distX * 1.5, zIndex: total - i
+      });
+
+      cards.forEach((c, i) => gsap.set(c, {
+        x: slot(i).x, y: slot(i).y, z: slot(i).z,
+        xPercent: -50, yPercent: -50, skewY: skew,
+        transformOrigin: 'center center', zIndex: slot(i).zIndex, force3D: true
+      }));
+
+      let order = cards.map((_, i) => i);
+
+      const swap = () => {
+        if (order.length < 2) return;
+        const [front, ...rest] = order;
+        const el = cards[front];
+        const tl = gsap.timeline();
+
+        tl.to(el, { y: '+=480', duration: 1.8, ease: 'elastic.out(0.6,0.9)' });
+        tl.addLabel('p', `-=${1.8 * 0.88}`);
+
+        rest.forEach((idx, i) => {
+          const s = slot(i);
+          tl.set(cards[idx], { zIndex: s.zIndex }, 'p');
+          tl.to(cards[idx], { x: s.x, y: s.y, z: s.z, duration: 1.8, ease: 'elastic.out(0.6,0.9)' }, `p+=${i * 0.12}`);
+        });
+
+        const back = slot(total - 1);
+        tl.addLabel('r', `p+=${1.8 * 0.05}`);
+        tl.call(() => gsap.set(el, { zIndex: back.zIndex }), undefined, 'r');
+        tl.to(el, { x: back.x, y: back.y, z: back.z, duration: 1.8, ease: 'elastic.out(0.6,0.9)' }, 'r');
+        tl.call(() => { order = [...rest, front]; });
+      };
+
+      swap();
+      setInterval(swap, delay);
+    })();
   </script>
 </body>
 </html>
