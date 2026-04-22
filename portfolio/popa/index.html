@@ -156,11 +156,55 @@
     .cs-section-title span { background: linear-gradient(135deg, var(--orange), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .cs-section-desc { font-size: 15px; line-height: 1.7; color: var(--muted); max-width: 480px; text-align: right; }
 
-    .figma-showcase {
-      width: 100%; aspect-ratio: 16/10; border-radius: 16px; overflow: hidden;
-      border: 1px solid var(--border); box-shadow: 0 32px 80px rgba(0,0,0,0.5); background: #111;
+    /* ── SCREENS GALLERY ── */
+    .cs-screens {
+      display: flex; gap: 32px;
+      overflow-x: auto; padding-bottom: 24px;
+      scrollbar-width: thin; scrollbar-color: rgba(249,115,22,0.3) transparent;
+      -webkit-overflow-scrolling: touch;
     }
-    .figma-showcase iframe { width: 100%; height: 100%; border: none; display: block; }
+    .cs-screens::-webkit-scrollbar { height: 3px; }
+    .cs-screens::-webkit-scrollbar-track { background: transparent; }
+    .cs-screens::-webkit-scrollbar-thumb { background: rgba(249,115,22,0.3); border-radius: 2px; }
+
+    .cs-screen-wrap {
+      flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 16px;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    }
+    .cs-section.visible .cs-screen-wrap { opacity: 1; transform: translateY(0); }
+    .cs-section.visible .cs-screen-wrap:nth-child(2) { transition-delay: 0.1s; }
+    .cs-section.visible .cs-screen-wrap:nth-child(3) { transition-delay: 0.2s; }
+
+    .cs-screen-browser {
+      width: 560px; border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(249,115,22,0.15);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+      background: #fff;
+    }
+    .cs-screen-topbar {
+      height: 30px; background: #f0f0f0; border-bottom: 1px solid #e0e0e0;
+      display: flex; align-items: center; padding: 0 10px; gap: 5px; flex-shrink: 0;
+    }
+    .cs-screen-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .cs-screen-dot:nth-child(1) { background: #ff5f57; }
+    .cs-screen-dot:nth-child(2) { background: #febc2e; }
+    .cs-screen-dot:nth-child(3) { background: #28c840; }
+    .cs-screen-url {
+      flex: 1; margin: 0 8px; height: 16px; background: #e4e4e4;
+      border-radius: 4px; font-size: 9px; color: #999;
+      display: flex; align-items: center; padding: 0 8px; font-family: monospace;
+    }
+    .cs-screen-img {
+      width: 100%; height: 400px;
+      object-fit: cover; object-position: top;
+      display: block;
+    }
+    .cs-screen-label {
+      font-family: 'Bricolage Grotesque', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(249,115,22,0.5);
+    }
 
     /* ── OVERLAY ── */
     #proto-overlay {
@@ -259,16 +303,102 @@
     <div class="cs-brief-item"><div class="cs-brief-label">Livrables</div><div class="cs-brief-val">13 écrans<br/>Prototype Figma</div></div>
   </div>
 
-  <section class="cs-section" id="s-prototype">
+  <!-- 01 — Accueil & Catalogue -->
+  <section class="cs-section" id="s-home">
     <div class="cs-section-header">
       <div>
         <div class="cs-section-num">01</div>
-        <h2 class="cs-section-title">Le <span>prototype</span></h2>
+        <h2 class="cs-section-title">Accueil &amp; <span>Catalogue</span></h2>
       </div>
-      <p class="cs-section-desc">Navigue dans le design complet — homepage, catalogue, fiches produit. Clique sur "Tester le prototype" pour l'expérience interactive.</p>
+      <p class="cs-section-desc">La homepage immersive avec les collections phares, et le catalogue filtrable pour explorer toutes les figurines disponibles.</p>
     </div>
-    <div class="figma-showcase">
-      <iframe src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FAMr5Q4Vwsa0FR4S53XTPBt%2FBalakumar_Djeassittarame_POPA%3Fnode-id%3D1-2%26scaling%3Dscale-down-width%26page-id%3D0%3A1" allowfullscreen></iframe>
+    <div class="cs-screens">
+      <div class="cs-screen-wrap">
+        <div class="cs-screen-browser">
+          <div class="cs-screen-topbar">
+            <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
+            <div class="cs-screen-url">popa.fr</div>
+          </div>
+          <img src="Accueil.png" class="cs-screen-img" alt="Accueil"/>
+        </div>
+        <span class="cs-screen-label">Accueil</span>
+      </div>
+      <div class="cs-screen-wrap">
+        <div class="cs-screen-browser">
+          <div class="cs-screen-topbar">
+            <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
+            <div class="cs-screen-url">popa.fr / collection / jjk</div>
+          </div>
+          <img src="JJK%20Collection.png" class="cs-screen-img" alt="Collection JJK"/>
+        </div>
+        <span class="cs-screen-label">Collection Jujutsu Kaisen</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 — Fiche Produit -->
+  <section class="cs-section" id="s-product">
+    <div class="cs-section-header">
+      <div>
+        <div class="cs-section-num">02</div>
+        <h2 class="cs-section-title">Fiche <span>produit</span></h2>
+      </div>
+      <p class="cs-section-desc">Une page produit riche — visuels haute qualité, caractéristiques, éditions disponibles et CTA achat bien mis en avant.</p>
+    </div>
+    <div class="cs-screens">
+      <div class="cs-screen-wrap">
+        <div class="cs-screen-browser">
+          <div class="cs-screen-topbar">
+            <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
+            <div class="cs-screen-url">popa.fr / produit / satoru-gojo-red-edition</div>
+          </div>
+          <img src="Page%20produit%20Satoru%20Gojo.png" class="cs-screen-img" alt="Fiche produit"/>
+        </div>
+        <span class="cs-screen-label">Satoru Gojo · Red Edition</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — Tunnel d'achat -->
+  <section class="cs-section" id="s-checkout">
+    <div class="cs-section-header">
+      <div>
+        <div class="cs-section-num">03</div>
+        <h2 class="cs-section-title">Tunnel <span>d'achat</span></h2>
+      </div>
+      <p class="cs-section-desc">Panier, paiement multi-méthodes et confirmation de commande — un flow d'achat fluide en 3 étapes.</p>
+    </div>
+    <div class="cs-screens">
+      <div class="cs-screen-wrap">
+        <div class="cs-screen-browser">
+          <div class="cs-screen-topbar">
+            <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
+            <div class="cs-screen-url">popa.fr / panier</div>
+          </div>
+          <img src="Panier.png" class="cs-screen-img" alt="Panier"/>
+        </div>
+        <span class="cs-screen-label">Panier</span>
+      </div>
+      <div class="cs-screen-wrap">
+        <div class="cs-screen-browser">
+          <div class="cs-screen-topbar">
+            <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
+            <div class="cs-screen-url">popa.fr / paiement</div>
+          </div>
+          <img src="Paiement.png" class="cs-screen-img" alt="Paiement"/>
+        </div>
+        <span class="cs-screen-label">Paiement</span>
+      </div>
+      <div class="cs-screen-wrap">
+        <div class="cs-screen-browser">
+          <div class="cs-screen-topbar">
+            <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
+            <div class="cs-screen-url">popa.fr / confirmation</div>
+          </div>
+          <img src="Finalisation%20commande.png" class="cs-screen-img" alt="Confirmation"/>
+        </div>
+        <span class="cs-screen-label">Confirmation</span>
+      </div>
     </div>
   </section>
 
