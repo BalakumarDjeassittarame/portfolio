@@ -103,97 +103,34 @@
     /* ── CARD SWAP ── */
     .cs-hero-right {
       display: flex; align-items: center; justify-content: center;
-      min-height: 520px;
+      min-height: 600px;
       opacity: 0; animation: fadeUp 0.9s 0.45s var(--ease) forwards;
     }
     .card-swap-wrap {
       position: relative;
-      width: 280px; height: 440px;
-      perspective: 900px;
+      width: 380px; height: 560px;
+      perspective: 1100px;
       overflow: visible;
     }
     .card-swap-wrap .card {
       position: absolute;
       top: 50%; left: 50%;
-      width: 270px; height: 390px;
-      border-radius: 18px;
-      border: 1px solid rgba(249,115,22,0.18);
-      background: #120c06;
+      width: 360px; height: 520px;
+      border-radius: 16px;
+      border: 1px solid rgba(249,115,22,0.2);
+      background: #fff;
       transform-style: preserve-3d;
       will-change: transform;
       backface-visibility: hidden;
       overflow: hidden;
       cursor: pointer;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
     }
-
-    /* Card inner screen content */
-    .card-screen { width: 100%; height: 100%; display: flex; flex-direction: column; background: linear-gradient(160deg, #1e1008 0%, #0d0a07 100%); }
-    .card-topbar {
-      height: 34px; background: rgba(249,115,22,0.07);
-      border-bottom: 1px solid rgba(249,115,22,0.1);
-      display: flex; align-items: center; padding: 0 12px; gap: 5px; flex-shrink: 0;
+    .card-img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block; pointer-events: none;
     }
-    .card-topbar-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(249,115,22,0.35); }
-    .card-topbar-logo {
-      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 11px;
-      background: linear-gradient(135deg, var(--orange), var(--amber));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-left: auto; margin-right: 4px;
-    }
-    .card-body { flex: 1; padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
-
-    /* Screen 1 — Accueil */
-    .card-hero-block {
-      background: linear-gradient(135deg, rgba(249,115,22,0.14), rgba(251,191,36,0.07));
-      border: 1px solid rgba(249,115,22,0.12);
-      border-radius: 10px; padding: 16px 14px;
-      display: flex; flex-direction: column; gap: 7px; flex: 1.4;
-    }
-    .c-line { height: 9px; border-radius: 5px; background: rgba(249,115,22,0.55); width: 55%; }
-    .c-line.w80 { height: 7px; width: 78%; background: rgba(255,255,255,0.13); }
-    .c-line.w45 { height: 7px; width: 45%; background: rgba(255,255,255,0.08); }
-    .c-btn { height: 24px; border-radius: 100px; background: linear-gradient(90deg,rgba(249,115,22,0.7),rgba(251,191,36,0.5)); width: 48%; margin-top: 4px; }
-    .card-prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; flex: 1; }
-    .card-prod {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 8px; padding: 7px; display: flex; flex-direction: column; gap: 5px;
-    }
-    .card-prod-img { flex: 1; border-radius: 5px; background: rgba(249,115,22,0.1); min-height: 36px; }
-    .card-prod-price { height: 5px; width: 48%; border-radius: 4px; background: rgba(249,115,22,0.45); }
-    .card-prod-tag { height: 5px; width: 68%; border-radius: 4px; background: rgba(255,255,255,0.09); }
-
-    /* Screen 2 — Catalogue */
-    .card-section-label { height: 6px; border-radius: 4px; background: rgba(249,115,22,0.45); width: 38%; }
-    .card-cat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; flex: 1; }
-    .card-cat-item {
-      border-radius: 7px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .card-cat-item:nth-child(1) { background: rgba(249,115,22,0.13); }
-    .card-cat-item:nth-child(5) { background: rgba(251,191,36,0.09); }
-    .card-cat-item:nth-child(8) { background: rgba(249,115,22,0.08); }
-    .card-filter-row { display: flex; gap: 5px; margin-bottom: 2px; }
-    .card-filter-chip { height: 18px; border-radius: 100px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); flex: 1; }
-    .card-filter-chip:first-child { background: rgba(249,115,22,0.18); border-color: rgba(249,115,22,0.25); }
-
-    /* Screen 3 — Fiche produit */
-    .card-detail-img {
-      height: 110px; border-radius: 10px; flex-shrink: 0;
-      background: linear-gradient(135deg, rgba(249,115,22,0.18), rgba(251,191,36,0.09));
-      border: 1px solid rgba(249,115,22,0.14);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .card-detail-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(249,115,22,0.3); }
-    .card-info-rows { display: flex; flex-direction: column; gap: 5px; }
-    .ci { height: 7px; border-radius: 4px; }
-    .ci.accent { background: linear-gradient(90deg, var(--orange), var(--amber)); width: 65%; }
-    .ci.mid { background: rgba(255,255,255,0.13); width: 85%; }
-    .ci.short { background: rgba(249,115,22,0.35); width: 42%; }
-    .card-size-row { display: flex; gap: 6px; margin-top: 2px; }
-    .card-size-chip { height: 20px; border-radius: 6px; flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09); }
-    .card-size-chip:nth-child(2) { background: rgba(249,115,22,0.2); border-color: rgba(249,115,22,0.3); }
-    .card-add-btn { height: 28px; border-radius: 100px; background: linear-gradient(135deg,rgba(249,115,22,0.8),rgba(251,191,36,0.6)); margin-top: 2px; }
 
     /* ── BRIEF STRIP ── */
     .cs-brief {
@@ -304,90 +241,11 @@
     <div class="cs-hero-right">
       <div class="card-swap-wrap" id="card-swap-wrap">
 
-        <!-- Card 1 : Accueil -->
-        <div class="card">
-          <div class="card-screen">
-            <div class="card-topbar">
-              <div class="card-topbar-dot"></div>
-              <div class="card-topbar-dot"></div>
-              <div class="card-topbar-dot"></div>
-              <div class="card-topbar-logo">Popa</div>
-            </div>
-            <div class="card-body">
-              <div class="card-hero-block">
-                <div class="c-line"></div>
-                <div class="c-line w80"></div>
-                <div class="c-line w45"></div>
-                <div class="c-btn"></div>
-              </div>
-              <div class="card-prod-grid">
-                <div class="card-prod"><div class="card-prod-img"></div><div class="card-prod-price"></div><div class="card-prod-tag"></div></div>
-                <div class="card-prod"><div class="card-prod-img"></div><div class="card-prod-price"></div><div class="card-prod-tag"></div></div>
-                <div class="card-prod"><div class="card-prod-img"></div><div class="card-prod-price"></div></div>
-                <div class="card-prod"><div class="card-prod-img"></div><div class="card-prod-price"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2 : Catalogue -->
-        <div class="card">
-          <div class="card-screen">
-            <div class="card-topbar">
-              <div class="card-topbar-dot"></div>
-              <div class="card-topbar-dot"></div>
-              <div class="card-topbar-dot"></div>
-              <div class="card-topbar-logo">Popa</div>
-            </div>
-            <div class="card-body">
-              <div class="card-section-label"></div>
-              <div class="card-filter-row">
-                <div class="card-filter-chip"></div>
-                <div class="card-filter-chip"></div>
-                <div class="card-filter-chip"></div>
-                <div class="card-filter-chip"></div>
-              </div>
-              <div class="card-cat-grid">
-                <div class="card-cat-item"></div>
-                <div class="card-cat-item"></div>
-                <div class="card-cat-item"></div>
-                <div class="card-cat-item"></div>
-                <div class="card-cat-item"></div>
-                <div class="card-cat-item"></div>
-                <div class="card-cat-item"></div>
-                <div class="card-cat-item"></div>
-                <div class="card-cat-item"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3 : Fiche produit -->
-        <div class="card">
-          <div class="card-screen">
-            <div class="card-topbar">
-              <div class="card-topbar-dot"></div>
-              <div class="card-topbar-dot"></div>
-              <div class="card-topbar-dot"></div>
-              <div class="card-topbar-logo">Popa</div>
-            </div>
-            <div class="card-body">
-              <div class="card-detail-img"><div class="card-detail-icon"></div></div>
-              <div class="card-info-rows">
-                <div class="ci accent"></div>
-                <div class="ci mid"></div>
-                <div class="ci short"></div>
-              </div>
-              <div class="card-size-row">
-                <div class="card-size-chip"></div>
-                <div class="card-size-chip"></div>
-                <div class="card-size-chip"></div>
-                <div class="card-size-chip"></div>
-              </div>
-              <div class="card-add-btn"></div>
-            </div>
-          </div>
-        </div>
+        <div class="card"><img src="screen-home.png" class="card-img" alt="Accueil"/></div>
+        <div class="card"><img src="screen-collection.png" class="card-img" alt="Collection"/></div>
+        <div class="card"><img src="screen-product.png" class="card-img" alt="Produit"/></div>
+        <div class="card"><img src="screen-checkout.png" class="card-img" alt="Paiement"/></div>
+        <div class="card"><img src="screen-confirm.png" class="card-img" alt="Confirmation"/></div>
 
       </div>
     </div>
@@ -455,7 +313,7 @@
       const wrap  = document.getElementById('card-swap-wrap');
       const cards = Array.from(wrap.querySelectorAll('.card'));
       const total = cards.length;
-      const distX = 52, distY = 60, skew = 5, delay = 2800;
+      const distX = 44, distY = 52, skew = 4, delay = 2800;
 
       const slot = i => ({
         x: i * distX, y: -i * distY, z: -i * distX * 1.5, zIndex: total - i
