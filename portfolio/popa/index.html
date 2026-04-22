@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Popa — Case Study · Balak Djeassi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --orange: #F97316; --amber: #FBBF24;
+      --bg: #0d0a07; --border: rgba(255,255,255,0.07);
+      --text: #f5f0eb; --muted: rgba(245,220,190,0.45);
+      --ease: cubic-bezier(0.16,1,0.3,1);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+    .cs-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 8vw;
+      background: linear-gradient(180deg, rgba(13,10,7,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(12px);
+    }
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--muted); text-decoration: none;
+      border: 1px solid var(--border); padding: 8px 18px; border-radius: 100px;
+      background: rgba(255,255,255,0.04);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .cs-back:hover { color: var(--text); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); }
+    .cs-nav-tag {
+      font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700;
+      background: linear-gradient(135deg, var(--orange), var(--amber));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* Bouton sticky */
+    .proto-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 90;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 700;
+      color: #fff; cursor: pointer; border: none;
+      padding: 14px 28px; border-radius: 100px;
+      background: linear-gradient(135deg, var(--orange), var(--amber));
+      box-shadow: 0 8px 32px rgba(249,115,22,0.4);
+      transition: transform 0.25s var(--ease), box-shadow 0.25s;
+      opacity: 0; animation: fadeUp 0.7s 1s var(--ease) forwards;
+    }
+    .proto-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 40px rgba(249,115,22,0.55); }
+
+    .cs-hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 120px 8vw 80px; position: relative; overflow: hidden;
+    }
+    .cs-glow1 { position: absolute; top: -20%; right: -10%; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(ellipse, rgba(249,115,22,0.1), transparent 65%); pointer-events: none; }
+    .cs-glow2 { position: absolute; bottom: 0; left: 0; width: 500px; height: 400px; background: radial-gradient(ellipse, rgba(251,191,36,0.05), transparent 65%); pointer-events: none; }
+
+    .cs-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--orange); border: 1px solid rgba(249,115,22,0.3);
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 32px;
+      opacity: 0; animation: fadeUp 0.7s 0.2s var(--ease) forwards;
+    }
+    .cs-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.6);} }
+
+    .cs-title {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+      font-size: clamp(80px, 14vw, 200px); letter-spacing: -0.04em; line-height: 0.9;
+      background: linear-gradient(135deg, #fff 0%, var(--orange) 45%, var(--amber) 80%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 32px; opacity: 0; animation: fadeUp 0.9s 0.35s var(--ease) forwards;
+    }
+    .cs-hero-bottom {
+      display: flex; align-items: flex-end; justify-content: space-between; width: 100%; gap: 48px;
+      opacity: 0; animation: fadeUp 0.9s 0.55s var(--ease) forwards;
+    }
+    .cs-tagline { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; font-size: clamp(18px,2.5vw,30px); color: var(--muted); max-width: 520px; line-height: 1.4; }
+    .cs-tagline strong { color: var(--text); font-weight: 600; }
+    .cs-meta { display: flex; flex-direction: column; gap: 12px; text-align: right; flex-shrink: 0; }
+    .cs-meta-item { display: flex; align-items: center; gap: 8px; justify-content: flex-end; font-size: 12px; color: var(--muted); }
+    .cs-meta-val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); }
+
+    .cs-brief {
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(4,1fr);
+      opacity: 0; animation: fadeUp 0.8s 0.75s var(--ease) forwards;
+    }
+    .cs-brief-item { padding: 36px 8vw; border-right: 1px solid var(--border); }
+    .cs-brief-item:last-child { border-right: none; }
+    .cs-brief-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .cs-brief-val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); line-height: 1.4; }
+
+    .cs-section {
+      padding: 120px 8vw; border-top: 1px solid var(--border);
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    .cs-section.visible { opacity: 1; transform: none; }
+    .cs-section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
+    .cs-section-num { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 80px; line-height: 1; color: rgba(255,255,255,0.04); margin-bottom: -8px; }
+    .cs-section-title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px,4vw,52px); letter-spacing: -0.02em; line-height: 1; }
+    .cs-section-title span { background: linear-gradient(135deg, var(--orange), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .cs-section-desc { font-size: 15px; line-height: 1.7; color: var(--muted); max-width: 480px; text-align: right; }
+
+    .figma-showcase {
+      width: 100%; aspect-ratio: 16/10; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border); box-shadow: 0 32px 80px rgba(0,0,0,0.5); background: #111;
+    }
+    .figma-showcase iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* Overlay prototype plein écran */
+    #proto-overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.35s var(--ease), visibility 0.35s;
+    }
+    #proto-overlay.open { opacity: 1; visibility: visible; }
+    .ov-backdrop { position: absolute; inset: 0; background: rgba(5,4,2,0.92); backdrop-filter: blur(12px); }
+    .ov-panel {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      transform: translateY(20px) scale(0.98); transition: transform 0.4s var(--ease);
+    }
+    #proto-overlay.open .ov-panel { transform: none; }
+    .ov-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 28px; border-bottom: 1px solid var(--border);
+      background: rgba(13,10,7,0.95); flex-shrink: 0;
+    }
+    .ov-bar-title {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px;
+      background: linear-gradient(135deg, var(--orange), var(--amber));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .ov-close {
+      width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border);
+      background: transparent; cursor: pointer; color: var(--muted);
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .ov-close:hover { border-color: rgba(255,255,255,0.3); color: var(--text); background: rgba(255,255,255,0.05); }
+    .ov-iframe { flex: 1; }
+    .ov-iframe iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    .cs-footer { border-top: 1px solid var(--border); padding: 48px 8vw; display: flex; align-items: center; justify-content: space-between; }
+    .cs-footer-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 14px; background: linear-gradient(135deg, var(--orange), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .cs-footer-right { font-size: 12px; color: var(--muted); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;} }
+  </style>
+</head>
+<body>
+
+  <nav class="cs-nav">
+    <a href="../index.html" class="cs-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Retour au portfolio
+    </a>
+    <span class="cs-nav-tag">Popa · Case Study</span>
+  </nav>
+
+  <button class="proto-btn" id="proto-trigger">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    Tester le prototype
+  </button>
+
+  <section class="cs-hero">
+    <div class="cs-glow1"></div>
+    <div class="cs-glow2"></div>
+    <div class="cs-label"><span class="cs-dot"></span>Case Study · 2025</div>
+    <h1 class="cs-title">Popa</h1>
+    <div class="cs-hero-bottom">
+      <p class="cs-tagline">Un site e-commerce dédié aux <strong>figurines et pop vinyl</strong> éditions limitées — de la culture pop au panier d'achat.</p>
+      <div class="cs-meta">
+        <div class="cs-meta-item"><span class="cs-meta-val">13</span> écrans</div>
+        <div class="cs-meta-item"><span class="cs-meta-val">Web</span> · Desktop</div>
+        <div class="cs-meta-item"><span class="cs-meta-val">UX/UI</span> Design</div>
+        <div class="cs-meta-item"><span class="cs-meta-val">Figma</span> · 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-brief">
+    <div class="cs-brief-item"><div class="cs-brief-label">Rôle</div><div class="cs-brief-val">Product Designer<br/>UX · UI</div></div>
+    <div class="cs-brief-item"><div class="cs-brief-label">Outils</div><div class="cs-brief-val">Figma<br/>Prototypage</div></div>
+    <div class="cs-brief-item"><div class="cs-brief-label">Type</div><div class="cs-brief-val">Projet scolaire<br/>2025</div></div>
+    <div class="cs-brief-item"><div class="cs-brief-label">Livrables</div><div class="cs-brief-val">13 écrans<br/>Prototype Figma</div></div>
+  </div>
+
+  <section class="cs-section" id="s-prototype">
+    <div class="cs-section-header">
+      <div>
+        <div class="cs-section-num">01</div>
+        <h2 class="cs-section-title">Le <span>prototype</span></h2>
+      </div>
+      <p class="cs-section-desc">Navigue dans le design complet — homepage, catalogue, fiches produit. Clique sur "Tester le prototype" pour l'expérience interactive.</p>
+    </div>
+    <div class="figma-showcase">
+      <iframe src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FAMr5Q4Vwsa0FR4S53XTPBt%2FBalakumar_Djeassittarame_POPA%3Fnode-id%3D1-2%26scaling%3Dscale-down-width%26page-id%3D0%3A1" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <footer class="cs-footer">
+    <span class="cs-footer-name">Balak Djeassi</span>
+    <span class="cs-footer-right">Popa · Case Study · 2025</span>
+  </footer>
+
+  <div id="proto-overlay">
+    <div class="ov-backdrop" id="ov-backdrop"></div>
+    <div class="ov-panel">
+      <div class="ov-bar">
+        <span class="ov-bar-title">Popa — Prototype interactif</span>
+        <button class="ov-close" id="ov-close">✕</button>
+      </div>
+      <div class="ov-iframe"><iframe id="ov-iframe" allowfullscreen allow="clipboard-read; clipboard-write"></iframe></div>
+    </div>
+  </div>
+
+  <script>
+    const overlay  = document.getElementById('proto-overlay');
+    const iframe   = document.getElementById('ov-iframe');
+    const FIGMA    = 'https://www.figma.com/embed?embed_host=share&url=' +
+      encodeURIComponent('https://www.figma.com/proto/AMr5Q4Vwsa0FR4S53XTPBt/Balakumar_Djeassittarame_POPA?node-id=1-2&scaling=scale-down-width&page-id=0:1');
+
+    function openOv()  { iframe.src = FIGMA; overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeOv() { overlay.classList.remove('open'); document.body.style.overflow = ''; setTimeout(() => { iframe.src = ''; }, 400); }
+
+    document.getElementById('proto-trigger').addEventListener('click', openOv);
+    document.getElementById('ov-close').addEventListener('click', closeOv);
+    document.getElementById('ov-backdrop').addEventListener('click', closeOv);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOv(); });
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.cs-section').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
