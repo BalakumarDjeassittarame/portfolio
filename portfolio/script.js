@@ -403,10 +403,12 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
     const tags     = [...row.querySelectorAll('.ptag')].map(t => t.textContent.trim());
     const figmaUrl = row.dataset.figma || '';
 
-    document.getElementById('pm-name').textContent = name;
-    document.getElementById('pm-cat').textContent  = cat;
-    document.getElementById('pm-yr').textContent   = yr;
-    document.getElementById('pm-desc').textContent = desc;
+    const num = row.querySelector('.proj-num')?.textContent.trim() || '';
+    document.getElementById('pm-name').textContent      = name;
+    document.getElementById('pm-cat').textContent       = cat;
+    document.getElementById('pm-yr').textContent        = yr;
+    document.getElementById('pm-desc').textContent      = desc;
+    document.getElementById('pm-watermark').textContent = num;
 
     // Tags
     const tagsEl = document.getElementById('pm-tags');
