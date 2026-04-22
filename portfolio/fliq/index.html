@@ -373,89 +373,87 @@
     <span class="cs-footer-right">Fliq · Case Study · 2025</span>
   </footer>
 
-  <!-- React JSX screens -->
-  <script type="text/babel" src="fliq-screens.jsx"></script>
-  <script type="text/babel" src="fliq-screens-2.jsx"></script>
-  <script type="text/babel" src="fliq-screens-3.jsx"></script>
-  <script type="text/babel" src="fliq-screens-4.jsx"></script>
+  <script>
+  // Charge les JSX via fetch → compile avec Babel → eval dans le bon ordre
+  (async function() {
+    const JSX_FILES = [
+      'fliq-screens.jsx',
+      'fliq-screens-2.jsx',
+      'fliq-screens-3.jsx',
+      'fliq-screens-4.jsx',
+    ];
 
-  <script type="text/babel">
-    // Phone wrapper (without label)
-    function PhoneShell({ children }) {
-      return (
-        <div style={{
-          background: '#2A1408', borderRadius: 56, padding: 3,
-          boxShadow: '0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05)',
-        }}>
-          <div style={{ background: '#3A2010', borderRadius: 54, padding: 3 }}>
-            <div style={{
-              width: 375, height: 812, borderRadius: 50,
-              overflow: 'hidden', position: 'relative',
-              fontFamily: '"Plus Jakarta Sans", sans-serif',
-              WebkitFontSmoothing: 'antialiased',
-            }}>
-              {/* Dynamic Island */}
-              <div style={{
-                position: 'absolute', top: 12, left: '50%',
-                transform: 'translateX(-50%)',
-                width: 120, height: 34, borderRadius: 20,
-                background: '#000', zIndex: 100,
-              }}/>
-              {children}
-            </div>
-          </div>
-        </div>
-      );
+    for (const src of JSX_FILES) {
+      try {
+        const code = await fetch(src).then(r => {
+          if (!r.ok) throw new Error(r.status);
+          return r.text();
+        });
+        const compiled = Babel.transform(code, { presets: ['react'] }).code;
+        // eslint-disable-next-line no-eval
+        (0, eval)(compiled);
+      } catch (e) {
+        console.error('Fliq: failed to load', src, e);
+      }
     }
 
-    // Map: container id → screen component
-    const SCREEN_MAP = {
-      s1:  Screen1Splash,
-      s2:  Screen2Intentions,
-      s3:  Screen3Origins,
-      s4:  Screen4Profile,
-      s5:  Screen5Swipe,
-      s6:  Screen6Liking,
-      s7:  Screen7Onboarding,
-      s8:  Screen8Match,
-      s9:  Screen9Profile,
-      s10: Screen10ChatList,
-      s11: Screen11Chat,
-      s12: Screen12Filters,
-      s13: Screen13Premium,
-      s14: Screen14Stats,
-      s15: Screen15Empty,
-      s16: Screen16Verify,
-      s17: Screen17Settings,
-      s18: Screen18Notifications,
-      s19: Screen19SuperLike,
-      s20: Screen20Report,
-      s21: Screen21ProfileEdit,
+    // PhoneShell — en JS pur (pas besoin de JSX)
+    window.PhoneShell = function PhoneShell({ children }) {
+      return React.createElement('div', {
+        style: {
+          background: '#2A1408', borderRadius: 56, padding: 3,
+          boxShadow: '0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05)',
+        }
+      },
+      React.createElement('div', { style: { background: '#3A2010', borderRadius: 54, padding: 3 } },
+        React.createElement('div', {
+          style: {
+            width: 375, height: 812, borderRadius: 50,
+            overflow: 'hidden', position: 'relative',
+            fontFamily: '"Plus Jakarta Sans", sans-serif',
+            WebkitFontSmoothing: 'antialiased',
+          }
+        },
+          // Dynamic Island
+          React.createElement('div', {
+            style: {
+              position: 'absolute', top: 12, left: '50%',
+              transform: 'translateX(-50%)',
+              width: 120, height: 34, borderRadius: 20,
+              background: '#000', zIndex: 100,
+            }
+          }),
+          children
+        )
+      ));
     };
 
-    // Render all screens
-    Object.entries(SCREEN_MAP).forEach(([id, Component]) => {
+    // Rendu de chaque écran
+    const SCREENS = {
+      s1:  'Screen1Splash',    s2:  'Screen2Intentions', s3:  'Screen3Origins',
+      s4:  'Screen4Profile',   s5:  'Screen5Swipe',      s6:  'Screen6Liking',
+      s7:  'Screen7Onboarding',s8:  'Screen8Match',      s9:  'Screen9Profile',
+      s10: 'Screen10ChatList', s11: 'Screen11Chat',      s12: 'Screen12Filters',
+      s13: 'Screen13Premium',  s14: 'Screen14Stats',     s15: 'Screen15Empty',
+      s16: 'Screen16Verify',   s17: 'Screen17Settings',  s18: 'Screen18Notifications',
+      s19: 'Screen19SuperLike',s20: 'Screen20Report',    s21: 'Screen21ProfileEdit',
+    };
+
+    Object.entries(SCREENS).forEach(([id, name]) => {
       const el = document.getElementById(id);
-      if (!el) return;
+      const Comp = window[name];
+      if (!el || !Comp) return;
       ReactDOM.createRoot(el).render(
-        <PhoneShell><Component /></PhoneShell>
+        React.createElement(window.PhoneShell, null, React.createElement(Comp, null))
       );
     });
 
-    // Scroll reveal
-    const revealObs = new IntersectionObserver(entries => {
+    // Scroll reveal sections
+    const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.cs-section').forEach(el => revealObs.observe(el));
-  </script>
-
-  <script>
-    // Smooth reveal for brief
-    const brief = document.querySelector('.cs-brief');
-    const briefObs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.style.animation = 'none'; });
-    });
-    if (brief) briefObs.observe(brief);
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.cs-section').forEach(el => obs.observe(el));
+  })();
   </script>
 
 </body>
