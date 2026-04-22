@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fliq — Case Study · Balak Djeassi</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --rose:   #E8627A;
+      --salmon: #F09070;
+      --peach:  #F5B08A;
+      --bg:     #0d090d;
+      --surface: rgba(255,255,255,0.03);
+      --border:  rgba(255,255,255,0.07);
+      --text:    #f0ece8;
+      --muted:   rgba(240,220,210,0.45);
+      --ease:    cubic-bezier(0.16,1,0.3,1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── BACK NAV ── */
+    .cs-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 8vw;
+      background: linear-gradient(180deg, rgba(13,9,13,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(12px);
+    }
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--muted); text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 8px 18px; border-radius: 100px;
+      background: rgba(255,255,255,0.04);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .cs-back:hover { color: var(--text); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); }
+    .cs-nav-tag {
+      font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700;
+      background: linear-gradient(135deg, var(--rose), var(--peach));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* ── HERO ── */
+    .cs-hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 120px 8vw 80px;
+      position: relative; overflow: hidden;
+    }
+    .cs-hero-glow {
+      position: absolute; top: -20%; right: -10%;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(232,98,122,0.12), transparent 65%);
+      pointer-events: none;
+    }
+    .cs-hero-glow2 {
+      position: absolute; bottom: 0; left: 0;
+      width: 500px; height: 400px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(245,176,138,0.06), transparent 65%);
+      pointer-events: none;
+    }
+    .cs-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rose);
+      border: 1px solid rgba(232,98,122,0.3);
+      padding: 6px 16px; border-radius: 100px;
+      margin-bottom: 32px;
+      opacity: 0; animation: fadeUp 0.7s 0.2s var(--ease) forwards;
+    }
+    .cs-label-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.6);} }
+
+    .cs-title {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+      font-size: clamp(80px, 14vw, 200px);
+      letter-spacing: -0.04em; line-height: 0.9;
+      background: linear-gradient(135deg, #fff 0%, var(--rose) 40%, var(--peach) 75%, var(--salmon) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 32px;
+      opacity: 0; animation: fadeUp 0.9s 0.35s var(--ease) forwards;
+    }
+
+    .cs-hero-bottom {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      width: 100%; gap: 48px;
+      opacity: 0; animation: fadeUp 0.9s 0.55s var(--ease) forwards;
+    }
+    .cs-tagline {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500;
+      font-size: clamp(18px, 2.5vw, 30px);
+      color: var(--muted); max-width: 520px; line-height: 1.4;
+    }
+    .cs-tagline strong { color: var(--text); font-weight: 600; }
+    .cs-meta {
+      display: flex; flex-direction: column; gap: 12px; text-align: right; flex-shrink: 0;
+    }
+    .cs-meta-item {
+      display: flex; align-items: center; gap: 8px; justify-content: flex-end;
+      font-size: 12px; color: var(--muted); letter-spacing: 0.06em;
+    }
+    .cs-meta-val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); }
+
+    /* ── BRIEF STRIP ── */
+    .cs-brief {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      opacity: 0; animation: fadeUp 0.8s 0.75s var(--ease) forwards;
+    }
+    .cs-brief-item {
+      padding: 36px 8vw; border-right: 1px solid var(--border);
+    }
+    .cs-brief-item:last-child { border-right: none; }
+    .cs-brief-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .cs-brief-val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); line-height: 1.4; }
+
+    /* ── SECTION ── */
+    .cs-section {
+      padding: 120px 8vw;
+      border-top: 1px solid var(--border);
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    .cs-section.visible { opacity: 1; transform: none; }
+
+    .cs-section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 64px;
+    }
+    .cs-section-num {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+      font-size: 80px; line-height: 1;
+      color: rgba(255,255,255,0.04);
+      margin-bottom: -8px;
+    }
+    .cs-section-title {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+      font-size: clamp(28px, 4vw, 52px); letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .cs-section-title span {
+      background: linear-gradient(135deg, var(--rose), var(--peach));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .cs-section-desc {
+      font-size: 15px; line-height: 1.7; color: var(--muted);
+      max-width: 480px; text-align: right;
+    }
+
+    /* ── PHONES ROW ── */
+    .cs-phones {
+      display: flex; gap: 28px;
+      overflow-x: auto; padding-bottom: 24px;
+      scrollbar-width: thin; scrollbar-color: rgba(232,98,122,0.3) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cs-phones::-webkit-scrollbar { height: 3px; }
+    .cs-phones::-webkit-scrollbar-track { background: transparent; }
+    .cs-phones::-webkit-scrollbar-thumb { background: rgba(232,98,122,0.3); border-radius: 2px; }
+
+    .cs-phone-wrap {
+      flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 16px;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    }
+    .cs-section.visible .cs-phone-wrap { opacity: 1; transform: translateY(0); }
+    .cs-section.visible .cs-phone-wrap:nth-child(2) { transition-delay: 0.08s; }
+    .cs-section.visible .cs-phone-wrap:nth-child(3) { transition-delay: 0.16s; }
+    .cs-section.visible .cs-phone-wrap:nth-child(4) { transition-delay: 0.24s; }
+    .cs-section.visible .cs-phone-wrap:nth-child(5) { transition-delay: 0.32s; }
+    .cs-section.visible .cs-phone-wrap:nth-child(6) { transition-delay: 0.40s; }
+    .cs-section.visible .cs-phone-wrap:nth-child(7) { transition-delay: 0.48s; }
+
+    /* Phone scaler */
+    .cs-phone-slot {
+      width: 234px;   /* 390 * 0.6 */
+      height: 495px;  /* 825 * 0.6 */
+      overflow: hidden;
+      position: relative;
+    }
+    .cs-phone-inner {
+      transform: scale(0.6);
+      transform-origin: top left;
+      width: 390px;
+      pointer-events: none;
+    }
+    .cs-phone-label {
+      font-family: 'Bricolage Grotesque', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(232,98,122,0.5);
+    }
+
+    /* ── FOOTER ── */
+    .cs-footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 8vw;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cs-footer-name {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 14px;
+      background: linear-gradient(135deg, var(--rose), var(--peach));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .cs-footer-right { font-size: 12px; color: var(--muted); }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(20px); }
+      to   { opacity:1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="cs-nav">
+    <a href="../index.html" class="cs-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Retour au portfolio
+    </a>
+    <span class="cs-nav-tag">Fliq · Case Study</span>
+  </nav>
+
+  <!-- Hero -->
+  <section class="cs-hero">
+    <div class="cs-hero-glow"></div>
+    <div class="cs-hero-glow2"></div>
+    <div class="cs-label"><span class="cs-label-dot"></span>Case Study · 2025</div>
+    <h1 class="cs-title">Fliq</h1>
+    <div class="cs-hero-bottom">
+      <p class="cs-tagline">
+        Une application mobile de <strong>rencontre</strong> repensée autour des intentions, des origines et des vraies connexions humaines.
+      </p>
+      <div class="cs-meta">
+        <div class="cs-meta-item"><span class="cs-meta-val">21</span> écrans</div>
+        <div class="cs-meta-item"><span class="cs-meta-val">iOS</span> · iPhone 14 Pro</div>
+        <div class="cs-meta-item"><span class="cs-meta-val">UX/UI</span> Design</div>
+        <div class="cs-meta-item"><span class="cs-meta-val">Figma</span> · 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brief -->
+  <div class="cs-brief">
+    <div class="cs-brief-item">
+      <div class="cs-brief-label">Rôle</div>
+      <div class="cs-brief-val">Product Designer<br/>UX · UI</div>
+    </div>
+    <div class="cs-brief-item">
+      <div class="cs-brief-label">Outils</div>
+      <div class="cs-brief-val">Figma<br/>Claude Design</div>
+    </div>
+    <div class="cs-brief-item">
+      <div class="cs-brief-label">Durée</div>
+      <div class="cs-brief-val">Projet scolaire<br/>2025</div>
+    </div>
+    <div class="cs-brief-item">
+      <div class="cs-brief-label">Livrables</div>
+      <div class="cs-brief-val">21 écrans<br/>Prototype Figma</div>
+    </div>
+  </div>
+
+  <!-- 01 — Onboarding -->
+  <section class="cs-section" id="s-onboarding">
+    <div class="cs-section-header">
+      <div>
+        <div class="cs-section-num">01</div>
+        <h2 class="cs-section-title">Premiers <span>pas</span></h2>
+      </div>
+      <p class="cs-section-desc">De l'écran d'accueil à la création du profil — une expérience d'onboarding guidée, chaleureuse et centrée sur l'intention.</p>
+    </div>
+    <div class="cs-phones">
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s1"></div></div><span class="cs-phone-label">Splash</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s2"></div></div><span class="cs-phone-label">Intentions</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s3"></div></div><span class="cs-phone-label">Origines</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s4"></div></div><span class="cs-phone-label">Mon profil</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s7"></div></div><span class="cs-phone-label">Prêt à Fliq</span></div>
+    </div>
+  </section>
+
+  <!-- 02 — Découvrir -->
+  <section class="cs-section" id="s-discover">
+    <div class="cs-section-header">
+      <div>
+        <div class="cs-section-num">02</div>
+        <h2 class="cs-section-title">Explorer &amp; <span>Matcher</span></h2>
+      </div>
+      <p class="cs-section-desc">Le cœur de l'application — le swipe repensé avec plus de contexte, le Super Like et l'écran de like mutuel.</p>
+    </div>
+    <div class="cs-phones">
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s5"></div></div><span class="cs-phone-label">Swipe</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s6"></div></div><span class="cs-phone-label">Liking</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s19"></div></div><span class="cs-phone-label">Super Like</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s8"></div></div><span class="cs-phone-label">Match !</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s15"></div></div><span class="cs-phone-label">État vide</span></div>
+    </div>
+  </section>
+
+  <!-- 03 — Se connecter -->
+  <section class="cs-section" id="s-connect">
+    <div class="cs-section-header">
+      <div>
+        <div class="cs-section-num">03</div>
+        <h2 class="cs-section-title">Se <span>connecter</span></h2>
+      </div>
+      <p class="cs-section-desc">Après le match — la messagerie conçue pour lancer des conversations authentiques avec le bon contexte.</p>
+    </div>
+    <div class="cs-phones">
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s10"></div></div><span class="cs-phone-label">Messages</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s11"></div></div><span class="cs-phone-label">Conversation</span></div>
+    </div>
+  </section>
+
+  <!-- 04 — Profil -->
+  <section class="cs-section" id="s-profile">
+    <div class="cs-section-header">
+      <div>
+        <div class="cs-section-num">04</div>
+        <h2 class="cs-section-title">Mon <span>profil</span></h2>
+      </div>
+      <p class="cs-section-desc">Un profil riche et personnalisable — présenter qui on est au-delà d'une simple photo.</p>
+    </div>
+    <div class="cs-phones">
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s9"></div></div><span class="cs-phone-label">Voir le profil</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s21"></div></div><span class="cs-phone-label">Éditer</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s16"></div></div><span class="cs-phone-label">Vérification</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s14"></div></div><span class="cs-phone-label">Stats</span></div>
+    </div>
+  </section>
+
+  <!-- 05 — Personnaliser -->
+  <section class="cs-section" id="s-settings">
+    <div class="cs-section-header">
+      <div>
+        <div class="cs-section-num">05</div>
+        <h2 class="cs-section-title">Contrôle &amp; <span>préférences</span></h2>
+      </div>
+      <p class="cs-section-desc">Filtres avancés, offre Premium, notifications, signalement — tout ce qui donne à l'utilisateur le contrôle de son expérience.</p>
+    </div>
+    <div class="cs-phones">
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s12"></div></div><span class="cs-phone-label">Filtres</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s13"></div></div><span class="cs-phone-label">Premium</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s17"></div></div><span class="cs-phone-label">Paramètres</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s18"></div></div><span class="cs-phone-label">Notifications</span></div>
+      <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s20"></div></div><span class="cs-phone-label">Signalement</span></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="cs-footer">
+    <span class="cs-footer-name">Balak Djeassi</span>
+    <span class="cs-footer-right">Fliq · Case Study · 2025</span>
+  </footer>
+
+  <!-- React JSX screens -->
+  <script type="text/babel" src="fliq-screens.jsx"></script>
+  <script type="text/babel" src="fliq-screens-2.jsx"></script>
+  <script type="text/babel" src="fliq-screens-3.jsx"></script>
+  <script type="text/babel" src="fliq-screens-4.jsx"></script>
+
+  <script type="text/babel">
+    // Phone wrapper (without label)
+    function PhoneShell({ children }) {
+      return (
+        <div style={{
+          background: '#2A1408', borderRadius: 56, padding: 3,
+          boxShadow: '0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05)',
+        }}>
+          <div style={{ background: '#3A2010', borderRadius: 54, padding: 3 }}>
+            <div style={{
+              width: 375, height: 812, borderRadius: 50,
+              overflow: 'hidden', position: 'relative',
+              fontFamily: '"Plus Jakarta Sans", sans-serif',
+              WebkitFontSmoothing: 'antialiased',
+            }}>
+              {/* Dynamic Island */}
+              <div style={{
+                position: 'absolute', top: 12, left: '50%',
+                transform: 'translateX(-50%)',
+                width: 120, height: 34, borderRadius: 20,
+                background: '#000', zIndex: 100,
+              }}/>
+              {children}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Map: container id → screen component
+    const SCREEN_MAP = {
+      s1:  Screen1Splash,
+      s2:  Screen2Intentions,
+      s3:  Screen3Origins,
+      s4:  Screen4Profile,
+      s5:  Screen5Swipe,
+      s6:  Screen6Liking,
+      s7:  Screen7Onboarding,
+      s8:  Screen8Match,
+      s9:  Screen9Profile,
+      s10: Screen10ChatList,
+      s11: Screen11Chat,
+      s12: Screen12Filters,
+      s13: Screen13Premium,
+      s14: Screen14Stats,
+      s15: Screen15Empty,
+      s16: Screen16Verify,
+      s17: Screen17Settings,
+      s18: Screen18Notifications,
+      s19: Screen19SuperLike,
+      s20: Screen20Report,
+      s21: Screen21ProfileEdit,
+    };
+
+    // Render all screens
+    Object.entries(SCREEN_MAP).forEach(([id, Component]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      ReactDOM.createRoot(el).render(
+        <PhoneShell><Component /></PhoneShell>
+      );
+    });
+
+    // Scroll reveal
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.cs-section').forEach(el => revealObs.observe(el));
+  </script>
+
+  <script>
+    // Smooth reveal for brief
+    const brief = document.querySelector('.cs-brief');
+    const briefObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.style.animation = 'none'; });
+    });
+    if (brief) briefObs.observe(brief);
+  </script>
+
+</body>
+</html>
