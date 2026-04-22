@@ -381,14 +381,17 @@ section { position: relative; z-index: 1; }
   padding: 5px 14px; border-radius: 100px;
   border: 1px solid var(--border);
   color: var(--text-muted);
-  transition: border-color 0.25s, color 0.25s, background 0.25s;
+  transition: border-color 0.3s, color 0.3s, background 0.3s,
+              transform 0.3s var(--ease), padding 0.3s var(--ease),
+              font-size 0.3s var(--ease), box-shadow 0.3s;
 }
-.proj-row.pr1:hover .ptag { border-color: rgba(167,139,250,0.35); color: var(--purple-soft); background: rgba(124,58,237,0.07); }
-.proj-row.pr2:hover .ptag { border-color: rgba(6,182,212,0.35); color: var(--cyan); background: rgba(6,182,212,0.07); }
-.proj-row.pr3:hover .ptag { border-color: rgba(236,72,153,0.35); color: var(--pink); background: rgba(236,72,153,0.07); }
-.proj-row.pr4:hover .ptag { border-color: rgba(249,115,22,0.35); color: var(--orange); background: rgba(249,115,22,0.07); }
-.proj-row.pr5:hover .ptag { border-color: rgba(232,98,122,0.35); color: var(--rose); background: rgba(232,98,122,0.07); }
-.proj-row.pr6:hover .ptag { border-color: rgba(16,185,129,0.35); color: var(--emerald); background: rgba(16,185,129,0.07); }
+.proj-row:hover .ptag {
+  font-size: 12px;
+  padding: 7px 18px;
+  font-weight: 600;
+}
+.proj-row.pr5:hover .ptag { border-color: rgba(232,98,122,0.6); color: var(--rose); background: rgba(232,98,122,0.12); box-shadow: 0 0 12px rgba(232,98,122,0.15); }
+.proj-row.pr6:hover .ptag { border-color: rgba(16,185,129,0.6); color: var(--emerald); background: rgba(16,185,129,0.12); box-shadow: 0 0 12px rgba(16,185,129,0.15); }
 
 /* Panneau dépliable au hover */
 .proj-expand {
@@ -411,13 +414,44 @@ section { position: relative; z-index: 1; }
   max-width: 460px; flex: 1;
 }
 .proj-link {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700;
   color: var(--text); text-decoration: none;
-  opacity: 0.7; transition: opacity 0.2s, gap 0.2s;
+  padding: 11px 22px; border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
+  transition: gap 0.25s var(--ease), background 0.25s, border-color 0.25s,
+              transform 0.25s var(--ease), box-shadow 0.25s;
   cursor: none; flex-shrink: 0; margin-top: 4px;
 }
-.proj-link:hover { opacity: 1; gap: 12px; }
+.proj-link:hover {
+  gap: 14px;
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.proj-row.pr5 .proj-link {
+  border-color: rgba(232,98,122,0.4);
+  background: rgba(232,98,122,0.1);
+  color: var(--rose);
+}
+.proj-row.pr5 .proj-link:hover {
+  background: rgba(232,98,122,0.2);
+  border-color: rgba(232,98,122,0.7);
+  box-shadow: 0 8px 24px rgba(232,98,122,0.2);
+}
+.proj-row.pr6 .proj-link {
+  border-color: rgba(16,185,129,0.4);
+  background: rgba(16,185,129,0.1);
+  color: var(--emerald);
+}
+.proj-row.pr6 .proj-link:hover {
+  background: rgba(16,185,129,0.2);
+  border-color: rgba(16,185,129,0.7);
+  box-shadow: 0 8px 24px rgba(16,185,129,0.2);
+}
 
 /* ── SKILLS ── */
 #skills {
@@ -648,10 +682,10 @@ footer {
 
 /* Left — info */
 .pm-left {
-  width: 36%; min-width: 320px;
+  width: 30%; min-width: 300px; max-width: 380px;
   background: rgba(14, 14, 31, 0.97);
   border-right: 1px solid var(--border);
-  padding: 48px 48px 48px;
+  padding: 48px 40px 48px;
   display: flex; flex-direction: column;
   overflow-y: auto;
 }
@@ -712,21 +746,6 @@ footer {
   background: #0a0a1a;
   display: flex; flex-direction: column;
   position: relative; overflow: hidden;
-}
-.pm-right-header {
-  padding: 20px 28px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 10px;
-  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--text-muted);
-}
-.pm-right-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--rose); animation: pulse-dot 2s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.6); }
 }
 .pm-iframe {
   flex: 1; width: 100%; height: 100%;
