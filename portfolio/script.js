@@ -431,6 +431,29 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
 })();
 
 
+// ── NAV ACTIVE STATE ──
+(function() {
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const sections = document.querySelectorAll('section[id]');
+
+  const setActive = (id) => {
+    navLinks.forEach(l => l.classList.remove('nav-active'));
+    const active = document.querySelector(`nav a[href="#${id}"]`);
+    if (active) active.classList.add('nav-active');
+  };
+
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, {
+    threshold: 0,
+    rootMargin: '-30% 0px -60% 0px'
+  });
+
+  sections.forEach(s => navObserver.observe(s));
+})();
+
 // ── SCROLL REVEAL ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
