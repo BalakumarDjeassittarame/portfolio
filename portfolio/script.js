@@ -376,7 +376,8 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
   const pmLeft   = modal.querySelector('.pm-left');
   const cursorEl = document.getElementById('cursor');
 
-  // Curseur : masquer quand on entre dans l'iframe (cross-origin = plus de mousemove)
+  // Curseur : masquer quand la souris est sur le panneau Figma
+  // (mousemove s'arrête dès qu'on entre dans l'iframe cross-origin → on check les coords)
   function hideCursor() {
     cursorEl.style.opacity = '0';
     cursorEl.style.transition = 'opacity 0.15s';
@@ -386,11 +387,13 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
     cursorEl.style.transition = 'opacity 0.25s';
   }
 
-  pmRight.addEventListener('mouseenter', hideCursor);
-  // Restaurer quand la souris revient sur le panneau gauche
-  pmLeft.addEventListener('mouseenter', showCursor);
-  // Sécurité : si la souris quitte la modal entièrement
-  modal.addEventListener('mouseleave', showCursor);
+  document.addEventListener('mousemove', (e) => {
+    if (!modal.classList.contains('open')) return;
+    const r = pmRight.getBoundingClientRect();
+    const overRight = e.clientX >= r.left && e.clientX <= r.right
+                   && e.clientY >= r.top  && e.clientY <= r.bottom;
+    overRight ? hideCursor() : showCursor();
+  });
 
   function openModal(row) {
     const name     = row.querySelector('.proj-name').textContent.trim();
