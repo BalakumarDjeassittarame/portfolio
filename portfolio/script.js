@@ -31,20 +31,15 @@
 })();
 
 
-// ── CUSTOM CURSOR ──
+// ── CUSTOM CURSOR ── (mousemove only, no RAF loop)
 const dot  = document.getElementById('cursor-dot');
 const ring = document.getElementById('cursor-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
 
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-(function animCursor() {
-  rx += (mx - rx) * 0.18;
-  ry += (my - ry) * 0.18;
-  dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
-  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-  requestAnimationFrame(animCursor);
-})();
+document.addEventListener('mousemove', e => {
+  const x = e.clientX, y = e.clientY;
+  dot.style.transform  = `translate(${x}px,${y}px)`;
+  ring.style.transform = `translate(${x}px,${y}px)`;
+}, { passive: true });
 
 document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
   el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
@@ -214,8 +209,8 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
   // ─ Simulation ─
   class Simulation {
     constructor() {
-      this.dt=0.014; this.BFECC=true; this.mouseForce=25;
-      this.cursorSize=110; this.resolution=0.5; this.poissonIter=32;
+      this.dt=0.014; this.BFECC=true; this.mouseForce=18;
+      this.cursorSize=80; this.resolution=0.28; this.poissonIter=12;
       this.cellScale=new THREE.Vector2(); this.fboSize=new THREE.Vector2();
       this.boundary=new THREE.Vector2();
       this.calcSize(); this.createFBOs(); this.createPasses();
@@ -353,9 +348,17 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
   const sim    = new Simulation();
   const output = new Output(sim);
 
+  // Pause quand l'onglet est caché ou quand le hero n'est plus visible
+  let _tabHidden = false, _heroGone = false;
+  document.addEventListener('visibilitychange', () => { _tabHidden = document.hidden; });
+  new IntersectionObserver(([e]) => { _heroGone = !e.isIntersecting; }, { threshold: 0 })
+    .observe(document.getElementById('hero'));
+
   function loop() {
-    auto.update(); Mouse.update(); Common.update();
-    sim.update(); output.render();
+    if (!_tabHidden && !_heroGone) {
+      auto.update(); Mouse.update(); Common.update();
+      sim.update(); output.render();
+    }
     requestAnimationFrame(loop);
   }
   loop();
@@ -505,16 +508,22 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal, .ex-item, .edu-item').forEach(el => observer.observe(el));
 
 
-// ── PARALLAXE HERO ──
-window.addEventListener('scroll', () => {
-  const sy       = window.scrollY;
-  const heroName = document.querySelector('.hero-name');
-  const heroSub  = document.querySelector('.hero-sub');
-  if (heroName) heroName.style.transform = `translateY(${sy * 0.15}px)`;
-  if (heroSub)  heroSub.style.transform  = `translateY(${sy * 0.08}px)`;
+// ── PARALLAXE HERO (RAF throttlé) ──
+const _pxName   = document.querySelector('.hero-name');
+const _pxSub    = document.querySelector('.hero-sub');
+const _pxHero   = document.getElementById('hero');
+const _pxFluid  = document.getElementById('fluid-bg');
+let   _pxTick   = false;
 
-  // Fade du fluid au scroll
-  const heroH = document.getElementById('hero').offsetHeight;
-  const op    = Math.max(0.12, 1 - (sy / heroH) * 0.88);
-  document.getElementById('fluid-bg').style.opacity = op;
-});
+window.addEventListener('scroll', () => {
+  if (_pxTick) return;
+  _pxTick = true;
+  requestAnimationFrame(() => {
+    const sy = window.scrollY;
+    if (_pxName) _pxName.style.transform = `translateY(${sy * 0.15}px)`;
+    if (_pxSub)  _pxSub.style.transform  = `translateY(${sy * 0.08}px)`;
+    const op = Math.max(0.12, 1 - (sy / (_pxHero.offsetHeight || 1)) * 0.88);
+    _pxFluid.style.opacity = op;
+    _pxTick = false;
+  });
+}, { passive: true });
