@@ -369,17 +369,25 @@ section { position: relative; z-index: 1; }
   color: rgba(255,255,255,0.15);
 }
 .proj-arrow {
-  width: 38px; height: 38px; border-radius: 50%;
+  height: 38px; min-width: 38px; border-radius: 100px;
   border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  transition: border-color 0.3s, background 0.3s, transform 0.4s var(--ease);
+  padding: 0 10px; gap: 0; overflow: hidden;
+  transition: border-color 0.35s, background 0.35s, color 0.3s,
+              padding 0.4s var(--ease), gap 0.4s var(--ease);
   flex-shrink: 0;
 }
-.proj-row:hover .proj-arrow {
-  border-color: rgba(167,139,250,0.5);
-  background: rgba(124,58,237,0.1);
-  transform: rotate(45deg);
+.proj-arrow-label {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.02em;
+  white-space: nowrap; overflow: hidden;
+  max-width: 0; opacity: 0;
+  transition: max-width 0.4s var(--ease), opacity 0.25s;
 }
+.proj-row:hover .proj-arrow { padding: 0 18px; gap: 8px; }
+.proj-row:hover .proj-arrow-label { max-width: 140px; opacity: 1; }
+.proj-row.pr5:hover .proj-arrow { border-color: rgba(232,98,122,0.5); background: rgba(232,98,122,0.1); color: var(--rose); }
+.proj-row.pr6:hover .proj-arrow { border-color: rgba(16,185,129,0.5); background: rgba(16,185,129,0.1); color: var(--emerald); }
 
 /* Tags — toujours visibles */
 .proj-tags-bar {

@@ -487,6 +487,14 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
   updateNav(); // état initial
 })();
 
+// ── PROJ ROW — toute la row est cliquable ──
+document.querySelectorAll('.proj-row[data-href]').forEach(row => {
+  row.addEventListener('click', () => {
+    window.location.href = row.dataset.href;
+  });
+});
+
+
 // ── SCROLL REVEAL ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
