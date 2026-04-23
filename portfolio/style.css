@@ -321,11 +321,13 @@ section { position: relative; z-index: 1; }
   cursor: none;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
   transition: background 0.4s;
 }
 .proj-row::before {
   content: ''; position: absolute; inset: 0;
   opacity: 0; transition: opacity 0.45s; pointer-events: none;
+  z-index: -1;
 }
 .proj-row.pr1::before { background: radial-gradient(ellipse at 85% 50%, rgba(124,58,237,0.1), transparent 60%); }
 .proj-row.pr2::before { background: radial-gradient(ellipse at 85% 50%, rgba(6,182,212,0.1), transparent 60%); }
@@ -333,10 +335,10 @@ section { position: relative; z-index: 1; }
 .proj-row.pr4::before { background: radial-gradient(ellipse at 85% 50%, rgba(249,115,22,0.09), transparent 60%); }
 .proj-row.pr5::before {
   background-image:
-    linear-gradient(to right, rgba(14,14,31,1) 22%, rgba(14,14,31,0.82) 48%, rgba(14,14,31,0.12) 100%),
+    linear-gradient(to right, rgba(14,14,31,0.98) 25%, rgba(14,14,31,0.65) 52%, rgba(14,14,31,0.05) 100%),
     url('popa/Accueil.png');
   background-size: 100% 100%, cover;
-  background-position: 0 0, right top;
+  background-position: 0 0, center 14%;
   background-repeat: no-repeat, no-repeat;
 }
 .proj-row.pr6::before { background: radial-gradient(ellipse at 85% 50%, rgba(16,185,129,0.1), transparent 60%); }
