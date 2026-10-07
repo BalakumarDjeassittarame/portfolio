@@ -234,7 +234,7 @@ function Screen13Premium() {
           fontFamily: jk, fontSize: 17, fontWeight: 900, color: '#160A06',
           boxShadow: '0 8px 28px rgba(255,215,0,0.35)', cursor: 'pointer',
           letterSpacing: '-0.3px',
-        }}>Try fliq Gold — {price}</div>
+        }}>Try fliq Gold · {price}</div>
         <div style={{ textAlign: 'center', marginTop: 12, fontFamily: jk, fontSize: 12, color: 'rgba(255,200,200,0.3)' }}>
           Cancel anytime · Auto-renews · Secure payment
         </div>
@@ -355,7 +355,7 @@ function Screen15Empty() {
           You've seen everyone nearby
         </div>
         <div style={{ fontFamily: jk, fontSize: 15, color: textSec, fontWeight: 500, lineHeight: 1.6, marginBottom: 32 }}>
-          Expand your radius or check back tomorrow — new profiles join every day.
+          Expand your radius or check back tomorrow. New profiles join every day.
         </div>
       </div>
 

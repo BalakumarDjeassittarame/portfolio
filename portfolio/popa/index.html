@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Popa — Case Study · Balak Djeassi</title>
+  <title>Popa · Balak Djeassi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
@@ -36,11 +36,6 @@
       transition: color 0.2s, border-color 0.2s, background 0.2s;
     }
     .cs-back:hover { color: var(--text); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); }
-    .cs-nav-tag {
-      font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700;
-      background: linear-gradient(135deg, var(--orange), var(--amber));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
 
     /* ── HERO ── */
     .cs-hero {
@@ -59,22 +54,6 @@
       opacity: 0; animation: fadeUp 0.9s 0.2s var(--ease) forwards;
     }
 
-    /* Tags row */
-    .cs-tags-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-    .cs-label {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--orange); border: 1px solid rgba(249,115,22,0.3);
-      padding: 6px 16px; border-radius: 100px;
-    }
-    .cs-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.6);} }
-    .cs-tag-pill {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
-      color: var(--muted); border: 1px solid var(--border);
-      padding: 5px 12px; border-radius: 100px;
-      background: rgba(255,255,255,0.03);
-    }
 
     .cs-title {
       font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
@@ -108,14 +87,14 @@
     }
     .card-swap-wrap {
       position: relative;
-      width: 720px; height: 720px;
+      width: min(720px, 100%); aspect-ratio: 1;
       perspective: 1400px;
       overflow: visible;
     }
     .card-swap-wrap .card {
       position: absolute;
       top: 50%; left: 50%;
-      width: 700px; height: 700px;
+      width: 97%; height: 97%;
       border-radius: 14px;
       border: 1px solid rgba(249,115,22,0.2);
       background: #fff;
@@ -245,6 +224,38 @@
     .cs-footer-right { font-size: 12px; color: var(--muted); }
 
     @keyframes fadeUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;} }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1023px) {
+      .cs-hero { grid-template-columns: 1fr; min-height: auto; padding: 120px 8vw 72px; gap: 56px; }
+      .cs-hero-right { min-height: 0; justify-content: flex-start; padding-top: 40px; }
+      .card-swap-wrap { width: min(560px, 74%); }
+      .cs-brief { grid-template-columns: repeat(2, 1fr); }
+      .cs-brief-item:nth-child(2) { border-right: none; }
+      .cs-brief-item:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+      .cs-section { padding: 88px 8vw; }
+      .cs-section-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 36px; }
+      .cs-section-desc { text-align: left; }
+      /* Galerie : pleine largeur, défilement avec aimantation */
+      .cs-screens { margin: 0 -8vw; padding: 0 8vw 20px; scroll-snap-type: x mandatory; scroll-padding: 0 8vw; gap: 20px; }
+      .cs-screen-wrap { scroll-snap-align: start; }
+      .cs-screen-browser { width: min(560px, 78vw); }
+      .cs-screen-img { height: auto; aspect-ratio: 7 / 5; }
+    }
+    @media (max-width: 600px) {
+      .cs-nav { padding: 14px 6vw; }
+      .cs-back { padding: 8px 14px; font-size: 12px; }
+      .cs-hero { padding: 104px 8vw 56px; gap: 40px; }
+      .cs-hero-left { gap: 22px; }
+      .cs-title { font-size: clamp(64px, 22vw, 120px); }
+      .proto-btn { padding: 13px 22px; }
+      .card-swap-wrap { width: 72%; }
+      .cs-brief-item { padding: 24px 6vw; }
+      .cs-section-num { font-size: 56px; }
+      .cs-section { padding: 72px 8vw; }
+      .cs-footer { flex-direction: column; gap: 8px; text-align: center; padding: 36px 8vw; }
+      .ov-bar { padding: 12px 16px; }
+    }
   </style>
 </head>
 <body>
@@ -254,7 +265,6 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
       Retour au portfolio
     </a>
-    <span class="cs-nav-tag">Popa · Case Study</span>
   </nav>
 
   <section class="cs-hero">
@@ -263,17 +273,9 @@
 
     <!-- Colonne gauche -->
     <div class="cs-hero-left">
-      <div class="cs-tags-row">
-        <div class="cs-label"><span class="cs-dot"></span>Case Study · 2025</div>
-        <span class="cs-tag-pill">13 écrans</span>
-        <span class="cs-tag-pill">Web · Desktop</span>
-        <span class="cs-tag-pill">UX/UI Design</span>
-        <span class="cs-tag-pill">Figma</span>
-      </div>
-
       <h1 class="cs-title">Popa</h1>
 
-      <p class="cs-tagline">Un site e-commerce dédié aux <strong>figurines et pop vinyl</strong> éditions limitées — de la culture pop au panier d'achat.</p>
+      <p class="cs-tagline">Un site e-commerce dédié aux <strong>figurines et pop vinyl</strong> éditions limitées, de la culture pop au panier d'achat.</p>
 
       <button class="proto-btn" id="proto-trigger">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -285,12 +287,12 @@
     <div class="cs-hero-right">
       <div class="card-swap-wrap" id="card-swap-wrap">
 
-        <div class="card"><img src="Accueil.png" class="card-img" alt="Accueil"/></div>
-        <div class="card"><img src="JJK%20Collection.png" class="card-img" alt="Collection"/></div>
-        <div class="card"><img src="Page%20produit%20Satoru%20Gojo.png" class="card-img" alt="Produit"/></div>
-        <div class="card"><img src="Panier.png" class="card-img" alt="Panier"/></div>
-        <div class="card"><img src="Paiement.png" class="card-img" alt="Paiement"/></div>
-        <div class="card"><img src="Finalisation%20commande.png" class="card-img" alt="Confirmation"/></div>
+        <div class="card"><img src="Accueil.webp" class="card-img" alt="Accueil"/></div>
+        <div class="card"><img src="JJK%20Collection.webp" class="card-img" alt="Collection"/></div>
+        <div class="card"><img src="Page%20produit%20Satoru%20Gojo.webp" class="card-img" alt="Produit"/></div>
+        <div class="card"><img src="Panier.webp" class="card-img" alt="Panier"/></div>
+        <div class="card"><img src="Paiement.webp" class="card-img" alt="Paiement"/></div>
+        <div class="card"><img src="Finalisation%20commande.webp" class="card-img" alt="Confirmation"/></div>
 
       </div>
     </div>
@@ -319,7 +321,7 @@
             <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
             <div class="cs-screen-url">popa.fr</div>
           </div>
-          <img src="Accueil.png" class="cs-screen-img" alt="Accueil"/>
+          <img src="Accueil.webp" class="cs-screen-img" loading="lazy" decoding="async" alt="Accueil"/>
         </div>
         <span class="cs-screen-label">Accueil</span>
       </div>
@@ -329,7 +331,7 @@
             <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
             <div class="cs-screen-url">popa.fr / collection / jjk</div>
           </div>
-          <img src="JJK%20Collection.png" class="cs-screen-img" alt="Collection JJK"/>
+          <img src="JJK%20Collection.webp" class="cs-screen-img" loading="lazy" decoding="async" alt="Collection JJK"/>
         </div>
         <span class="cs-screen-label">Collection Jujutsu Kaisen</span>
       </div>
@@ -343,7 +345,7 @@
         <div class="cs-section-num">02</div>
         <h2 class="cs-section-title">Fiche <span>produit</span></h2>
       </div>
-      <p class="cs-section-desc">Une page produit riche — visuels haute qualité, caractéristiques, éditions disponibles et CTA achat bien mis en avant.</p>
+      <p class="cs-section-desc">Une page produit riche : visuels haute qualité, caractéristiques, éditions disponibles et CTA achat bien mis en avant.</p>
     </div>
     <div class="cs-screens">
       <div class="cs-screen-wrap">
@@ -352,7 +354,7 @@
             <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
             <div class="cs-screen-url">popa.fr / produit / satoru-gojo-red-edition</div>
           </div>
-          <img src="Page%20produit%20Satoru%20Gojo.png" class="cs-screen-img" alt="Fiche produit"/>
+          <img src="Page%20produit%20Satoru%20Gojo.webp" class="cs-screen-img" loading="lazy" decoding="async" alt="Fiche produit"/>
         </div>
         <span class="cs-screen-label">Satoru Gojo · Red Edition</span>
       </div>
@@ -366,7 +368,7 @@
         <div class="cs-section-num">03</div>
         <h2 class="cs-section-title">Tunnel <span>d'achat</span></h2>
       </div>
-      <p class="cs-section-desc">Panier, paiement multi-méthodes et confirmation de commande — un flow d'achat fluide en 3 étapes.</p>
+      <p class="cs-section-desc">Panier, paiement multi-méthodes et confirmation de commande : un flow d'achat fluide en 3 étapes.</p>
     </div>
     <div class="cs-screens">
       <div class="cs-screen-wrap">
@@ -375,7 +377,7 @@
             <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
             <div class="cs-screen-url">popa.fr / panier</div>
           </div>
-          <img src="Panier.png" class="cs-screen-img" alt="Panier"/>
+          <img src="Panier.webp" class="cs-screen-img" loading="lazy" decoding="async" alt="Panier"/>
         </div>
         <span class="cs-screen-label">Panier</span>
       </div>
@@ -385,7 +387,7 @@
             <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
             <div class="cs-screen-url">popa.fr / paiement</div>
           </div>
-          <img src="Paiement.png" class="cs-screen-img" alt="Paiement"/>
+          <img src="Paiement.webp" class="cs-screen-img" loading="lazy" decoding="async" alt="Paiement"/>
         </div>
         <span class="cs-screen-label">Paiement</span>
       </div>
@@ -395,7 +397,7 @@
             <div class="cs-screen-dot"></div><div class="cs-screen-dot"></div><div class="cs-screen-dot"></div>
             <div class="cs-screen-url">popa.fr / confirmation</div>
           </div>
-          <img src="Finalisation%20commande.png" class="cs-screen-img" alt="Confirmation"/>
+          <img src="Finalisation%20commande.webp" class="cs-screen-img" loading="lazy" decoding="async" alt="Confirmation"/>
         </div>
         <span class="cs-screen-label">Confirmation</span>
       </div>
@@ -411,7 +413,7 @@
     <div class="ov-backdrop" id="ov-backdrop"></div>
     <div class="ov-panel">
       <div class="ov-bar">
-        <span class="ov-bar-title">Popa — Prototype interactif</span>
+        <span class="ov-bar-title">Popa · Prototype interactif</span>
         <button class="ov-close" id="ov-close">✕</button>
       </div>
       <div class="ov-iframe"><iframe id="ov-iframe" allowfullscreen allow="clipboard-read; clipboard-write"></iframe></div>
@@ -444,7 +446,9 @@
       const wrap  = document.getElementById('card-swap-wrap');
       const cards = Array.from(wrap.querySelectorAll('.card'));
       const total = cards.length;
-      const distX = 28, distY = 26, skew = 3, delay = 2800;
+      // Distances pensées pour une pile de 720px : on les met à l'échelle
+      const k = wrap.offsetWidth / 720;
+      const distX = 28 * k, distY = 26 * k, skew = 3, delay = 2800;
 
       const slot = i => ({
         x: i * distX, y: -i * distY, z: -i * distX * 1.5, zIndex: total - i
@@ -464,7 +468,7 @@
         const el = cards[front];
         const tl = gsap.timeline();
 
-        tl.to(el, { y: '+=480', duration: 1.8, ease: 'elastic.out(0.6,0.9)' });
+        tl.to(el, { y: `+=${480 * k}`, duration: 1.8, ease: 'elastic.out(0.6,0.9)' });
         tl.addLabel('p', `-=${1.8 * 0.88}`);
 
         rest.forEach((idx, i) => {

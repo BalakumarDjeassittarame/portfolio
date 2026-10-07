@@ -539,7 +539,7 @@ function Screen13Premium() {
       cursor: 'pointer',
       letterSpacing: '-0.3px'
     }
-  }, "Try fliq Gold \u2014 ", price), /*#__PURE__*/React.createElement("div", {
+  }, "Try fliq Gold \u00B7 ", price), /*#__PURE__*/React.createElement("div", {
     style: {
       textAlign: 'center',
       marginTop: 12,
@@ -897,7 +897,7 @@ function Screen15Empty() {
       lineHeight: 1.6,
       marginBottom: 32
     }
-  }, "Expand your radius or check back tomorrow \u2014 new profiles join every day.")), /*#__PURE__*/React.createElement("div", {
+  }, "Expand your radius or check back tomorrow. New profiles join every day.")), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '100%',
       padding: '0 24px',

@@ -991,7 +991,7 @@ const messages = [{
   time: '14:02'
 }, {
   from: 'me',
-  text: "Haha thank you! Yours too \u2014 love that you hike, I've been wanting to do the Brecon Beacons \uD83C\uDFD4\uFE0F",
+  text: "Haha thank you! Yours too, love that you hike, I've been wanting to do the Brecon Beacons \uD83C\uDFD4\uFE0F",
   time: '14:05'
 }, {
   from: 'them',

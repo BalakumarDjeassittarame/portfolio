@@ -308,7 +308,7 @@ const notifs = [{
   type: 'boost',
   photo: null,
   name: 'fliq',
-  msg: 'Your boost is active — you\'re getting 3× more views right now! ⚡',
+  msg: 'Your boost is active, you\'re getting 3× more views right now! ⚡',
   time: '5h',
   unread: false
 }, {

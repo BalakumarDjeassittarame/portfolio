@@ -120,7 +120,7 @@ const notifs = [
   { type: 'msg', photo: 'https://i.pravatar.cc/300?img=48', name: 'Asha', msg: 'Asha sent you a message: "Hey!! Your profile is..."', time: '15m', unread: true },
   { type: 'like', photo: 'https://i.pravatar.cc/300?img=5', name: 'Meera', msg: 'Meera liked your profile. Like back?', time: '1h', unread: true },
   { type: 'msg', photo: 'https://i.pravatar.cc/300?img=11', name: 'Riya', msg: 'Riya replied to your message.', time: '3h', unread: false },
-  { type: 'boost', photo: null, name: 'fliq', msg: 'Your boost is active — you\'re getting 3× more views right now! ⚡', time: '5h', unread: false },
+  { type: 'boost', photo: null, name: 'fliq', msg: 'Your boost is active, you\'re getting 3× more views right now! ⚡', time: '5h', unread: false },
   { type: 'like', photo: 'https://i.pravatar.cc/300?img=49', name: 'Ananya', msg: 'Ananya liked your profile.', time: 'Yesterday', unread: false },
 ];
 

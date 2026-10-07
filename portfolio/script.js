@@ -6,6 +6,13 @@
   const role    = screen.querySelector('.is-role');
   const bar     = screen.querySelector('.is-progress');
 
+  // Déjà vue pendant cette visite → on saute l'intro
+  if (document.documentElement.classList.contains('intro-seen')) {
+    screen.remove();
+    return;
+  }
+  try { sessionStorage.setItem('introSeen', '1'); } catch (e) {}
+
   // Masquer le hero pendant l'intro
   document.getElementById('hero').style.opacity = '0';
 
@@ -41,7 +48,7 @@ document.addEventListener('mousemove', e => {
   ring.style.transform = `translate(${x}px,${y}px)`;
 }, { passive: true });
 
-document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
+document.querySelectorAll('a, button, .skill-chip').forEach(el => {
   el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
   el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
 });
@@ -490,11 +497,142 @@ document.querySelectorAll('a, button, .proj-row, .skill-chip').forEach(el => {
   updateNav(); // état initial
 })();
 
-// ── PROJ ROW — toute la row est cliquable ──
-document.querySelectorAll('.proj-row[data-href]').forEach(row => {
-  row.addEventListener('click', () => {
-    window.location.href = row.dataset.href;
+// ── PROJETS : ACCORDÉON + FILTRES (carrousel sous 1024px) ──
+(function() {
+  const acc    = document.getElementById('workAcc');
+  if (!acc) return;
+  const panels = [...acc.querySelectorAll('.acc-p')];
+  const chips  = document.getElementById('wfChips');
+  const clear  = document.getElementById('wfClear');
+  const count  = document.getElementById('wfCount');
+  const dots   = document.getElementById('accDots');
+  const idx    = document.getElementById('accIdx');
+  const prev   = document.getElementById('accPrev');
+  const next   = document.getElementById('accNext');
+  const mobile = window.matchMedia('(max-width: 1023px)');
+
+  const tagsOf = p => [...p.querySelectorAll('.acc-tags span')].map(s => s.textContent.trim());
+  const allTags = [...new Set(panels.flatMap(tagsOf))];
+  let active = 'Tous';
+  let visible = panels;
+
+  // Filtres générés à partir des tags présents dans les projets
+  chips.innerHTML = ['Tous', ...allTags].map(t => {
+    const n = t === 'Tous' ? panels.length : panels.filter(p => tagsOf(p).includes(t)).length;
+    return `<button class="wf-chip" type="button" data-t="${t}"><i></i>${t}<sup>${n}</sup></button>`;
+  }).join('');
+
+  const open = p => panels.forEach(x => x.classList.toggle('on', x === p));
+
+  // Carrousel : projet calé à gauche
+  const padLeft = () => parseFloat(getComputedStyle(acc).paddingLeft);
+  const current = () => {
+    let best = 0, d = Infinity;
+    visible.forEach((p, i) => {
+      const k = Math.abs(p.offsetLeft - acc.offsetLeft - padLeft() - acc.scrollLeft);
+      if (k < d) { d = k; best = i; }
+    });
+    return best;
+  };
+  const sync = () => {
+    if (!mobile.matches || !visible.length) return;
+    const i = current();
+    [...dots.children].forEach((d, k) => d.classList.toggle('on', k === i));
+    idx.innerHTML = `<b>0${i + 1}</b> / 0${visible.length}`;
+    prev.disabled = i === 0;
+    next.disabled = i === visible.length - 1;
+    open(visible[i]);
+  };
+  const goTo = i => {
+    const p = visible[Math.max(0, Math.min(i, visible.length - 1))];
+    acc.scrollTo({ left: p.offsetLeft - acc.offsetLeft - padLeft(), behavior: 'smooth' });
+  };
+
+  const apply = t => {
+    active = t;
+    chips.querySelectorAll('.wf-chip').forEach(c => c.classList.toggle('on', c.dataset.t === t));
+    clear.classList.toggle('show', t !== 'Tous');
+    visible = panels.filter(p => t === 'Tous' || tagsOf(p).includes(t));
+    panels.forEach(p => {
+      p.classList.toggle('gone', !visible.includes(p));
+      p.classList.toggle('first', p === visible[0]);
+    });
+    if (!visible.some(p => p.classList.contains('on'))) open(visible[0]);
+    acc.querySelectorAll('.acc-tags span').forEach(s => s.classList.toggle('hit', s.textContent.trim() === t));
+    count.innerHTML = `<b>${visible.length}</b> projet${visible.length > 1 ? 's' : ''}`;
+    dots.innerHTML = visible.map(() => '<i></i>').join('');
+    acc.scrollLeft = 0;
+    sync();
+  };
+
+  // Re-cliquer sur le filtre actif le désactive
+  chips.querySelectorAll('.wf-chip').forEach(c => {
+    c.addEventListener('click', () => apply(c.dataset.t === active ? 'Tous' : c.dataset.t));
   });
+  clear.addEventListener('click', () => apply('Tous'));
+
+  // Clic sur un tag dans un panneau → filtre sur ce tag (sans ouvrir le projet)
+  acc.querySelectorAll('.acc-tags span').forEach(s => s.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    apply(s.textContent.trim());
+  }));
+
+  panels.forEach(p => {
+    p.addEventListener('mouseenter', () => { if (!mobile.matches && !p.classList.contains('gone')) open(p); });
+    // On mémorise le scroll avant d'ouvrir un projet pour y revenir au retour
+    p.addEventListener('click', () => {
+      try { sessionStorage.setItem('homeScroll', String(window.scrollY)); } catch (e) {}
+    });
+  });
+
+  let raf = 0;
+  acc.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+  prev.addEventListener('click', () => goTo(current() - 1));
+  next.addEventListener('click', () => goTo(current() + 1));
+  mobile.addEventListener('change', () => { acc.scrollLeft = 0; sync(); });
+
+  // Curseur personnalisé sur les éléments créés ici
+  [...chips.children, clear, prev, next].forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+  });
+
+  apply('Tous');
+})();
+
+
+// ── RETOUR D'UN PROJET → restaurer la position de scroll ──
+(function() {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  let y = null;
+  try { y = sessionStorage.getItem('homeScroll'); } catch (e) {}
+  if (y === null) return;
+
+  const nav = performance.getEntriesByType('navigation')[0];
+  const fromBack = nav && nav.type === 'back_forward';
+  const fromProject = /\/(popa|fliq|temu|techcorp)\//.test(document.referrer);
+  if (!fromBack && !fromProject) return;
+
+  const restore = () => window.scrollTo({ top: +y, behavior: 'instant' });
+  restore();
+  // Les polices / images peuvent décaler la mise en page : on réapplique une fois chargé
+  window.addEventListener('load', restore, { once: true });
+})();
+
+// Retour via le cache du navigateur (bfcache) : la page est déjà au bon endroit
+window.addEventListener('pageshow', e => {
+  if (e.persisted) document.body.classList.remove('hovering');
+});
+
+
+// ── PARCOURS : durée de chaque poste (mois de début et de fin inclus) ──
+document.querySelectorAll('.cv-dur').forEach(el => {
+  const toM = s => { const [y, m] = s.split('-').map(Number); return y * 12 + m - 1; };
+  const now = new Date();
+  const end = el.dataset.end ? toM(el.dataset.end) : now.getFullYear() * 12 + now.getMonth();
+  const n = end - toM(el.dataset.start) + 1;
+  const a = Math.floor(n / 12), r = n % 12;
+  el.textContent = [a ? a + ' an' + (a > 1 ? 's' : '') : '', r ? r + ' mois' : ''].filter(Boolean).join(' ');
 });
 
 

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechCorp · Balak Djeassi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent: #a79dfd;
+      --bg: #0c121b; --surface: #131b27;
+      --line: rgba(255,255,255,0.08);
+      --text: #eef2f7; --text-2: #aab4c3; --text-3: #6f7b8d;
+      --ease: cubic-bezier(0.16,1,0.3,1);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
+    a { color: inherit; }
+    h1, h2, h3, h4 { font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: -0.02em; line-height: 1.1; }
+    strong { color: var(--text); font-weight: 500; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NAV ── */
+    .cs-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 8vw; background: linear-gradient(180deg, rgba(12,18,27,0.95), transparent); backdrop-filter: blur(12px); }
+    .cs-back { display: inline-flex; align-items: center; gap: 10px; font: 600 13px 'Bricolage Grotesque'; color: var(--text-2); text-decoration: none; border: 1px solid var(--line); padding: 8px 18px; border-radius: 100px; background: rgba(255,255,255,0.04); transition: color 0.2s, border-color 0.2s; }
+    .cs-back:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    /* ── HERO ── */
+    .hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: 6vw; align-items: center; padding: 140px 8vw 80px; min-height: 92vh; }
+    .hero h1 { font-weight: 800; font-size: clamp(64px, 8.5vw, 128px); line-height: 0.9; letter-spacing: -0.04em; color: var(--accent); margin-bottom: 28px; }
+    .hero p { font-size: clamp(17px, 1.6vw, 21px); color: var(--text-2); max-width: 500px; }
+    .hero > * { min-width: 0; }
+    .hero-phones { display: flex; justify-content: center; align-items: flex-end; gap: 18px; }
+    .hero-phones .phone:nth-child(2) { transform: translateY(-36px); }
+    .hero-phones .phone { flex: 0 1 220px; min-width: 0; }
+
+    /* Téléphone : cadre simple autour d'une capture */
+    .phone { flex: none; width: 220px; border-radius: 28px; overflow: hidden; border: 6px solid #1e2836; background: #fff; box-shadow: 0 24px 60px rgba(0,0,0,0.45); }
+    .phone img { width: 100%; }
+
+    /* ── BRIEF ── */
+    .brief { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .brief div { padding: 32px 4vw 32px 0; }
+    .brief div:first-child { padding-left: 8vw; }
+    .brief dt { font-size: 12px; color: var(--text-3); margin-bottom: 8px; }
+    .brief dd { font: 600 15px/1.45 'Bricolage Grotesque'; }
+
+    /* ── SECTIONS ── */
+    .sec { padding: 120px 8vw; border-top: 1px solid var(--line); }
+    .sec-head { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6vw; margin-bottom: 56px; align-items: end; }
+    .sec-head h2 { font-weight: 800; font-size: clamp(34px, 4.4vw, 58px); }
+    .sec-head h2 span { color: var(--text-3); font-weight: 600; margin-right: 14px; }
+    .sec-head p { color: var(--text-2); font-size: 16px; }
+    h3.sub { font-size: 22px; margin: 64px 0 20px; }
+
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    .stat { padding: 30px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+    .stat b { display: block; font: 800 clamp(44px, 5vw, 68px)/1 'Bricolage Grotesque'; letter-spacing: -0.03em; color: var(--accent); margin-bottom: 12px; }
+    .stat p { color: var(--text-2); font-size: 14px; }
+
+    .list { list-style: none; display: grid; gap: 10px; }
+    .list li { position: relative; padding-left: 20px; color: var(--text-2); font-size: 15px; }
+    .list li::before { content: ''; position: absolute; left: 2px; top: 0.62em; width: 6px; height: 6px; border-radius: 1px; background: var(--accent); }
+
+    /* Personas */
+    .personas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .persona { padding: 28px; border-top: 3px solid var(--accent); background: var(--surface); border-radius: 0 0 14px 14px; }
+    .persona h3 { font-size: 22px; }
+    .persona .who { font-size: 13px; color: var(--text-3); margin: 4px 0 16px; }
+    .persona p { color: var(--text-2); font-size: 15px; }
+
+    /* Epics */
+    .epics { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+    .epic { padding: 20px; border: 1px solid var(--line); border-radius: 12px; }
+    .epic small { font-size: 12px; color: var(--text-3); }
+    .epic.v2 small { color: var(--accent); }
+    .epic h4 { font-size: 18px; margin: 6px 0 8px; }
+    .epic p { font-size: 13px; color: var(--text-2); }
+    .story { margin-top: 24px; padding: 22px 26px; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 12px 12px 0; color: var(--text-2); max-width: 760px; }
+    .story b { color: var(--text); font-weight: 500; }
+    .story small { display: block; margin-top: 8px; font-size: 12px; color: var(--text-3); }
+
+    /* Sprints */
+    .sprints { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .sprint { padding: 26px; border: 1px solid var(--line); border-radius: 14px; }
+    .sprint h4 { font-size: 20px; margin-bottom: 4px; }
+    .sprint .when { font-size: 13px; color: var(--text-3); margin-bottom: 16px; }
+    .sprint .list li { font-size: 14px; }
+    .caption { font-size: 13px; color: var(--text-3); margin-top: 10px; }
+
+    /* Rangées d'écrans */
+    .flow { padding: 56px 0; border-bottom: 1px solid var(--line); }
+    .flow:last-child { border-bottom: 0; }
+    .flow-head { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6vw; margin-bottom: 32px; align-items: start; }
+    .flow-head h3 { font-size: clamp(24px, 2.4vw, 32px); }
+    .flow-head p { color: var(--text-2); }
+    .phones { display: flex; gap: 24px; overflow-x: auto; padding: 8px 0 24px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+    .phones figure { scroll-snap-align: start; }
+    .phones figcaption { margin-top: 12px; font-size: 13px; color: var(--text-3); text-align: center; }
+    .phones .phone { width: 240px; }
+
+    /* Marque blanche */
+    .wb { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: start; }
+    .landing { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); max-height: 720px; overflow-y: auto; scrollbar-width: thin; }
+    .wb .txt { position: sticky; top: 110px; }
+    .wb p { color: var(--text-2); margin-bottom: 14px; }
+    .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 24px; }
+    .swatches span { aspect-ratio: 1; border-radius: 10px; background: var(--c); display: flex; align-items: flex-end; padding: 10px; font-size: 11px; color: #fff; }
+
+    footer { border-top: 1px solid var(--line); padding: 40px 8vw; display: flex; justify-content: space-between; font-size: 13px; color: var(--text-3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1023px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 120px; }
+      .hero-phones { justify-content: flex-start; overflow: hidden; }
+      .brief { grid-template-columns: repeat(2, 1fr); }
+      .brief div, .brief div:first-child { padding: 24px 4vw 24px 8vw; }
+      .sec { padding: 88px 8vw; }
+      .sec-head, .flow-head, .wb { grid-template-columns: 1fr; gap: 16px; }
+      .sec-head { margin-bottom: 40px; }
+      .stats, .personas, .sprints { grid-template-columns: 1fr; }
+      .wb .txt { position: static; }
+      .phones { margin: 0 -8vw; padding: 8px 8vw 24px; scroll-padding: 0 8vw; }
+    }
+    @media (max-width: 600px) {
+      .cs-nav { padding: 14px 6vw; }
+      .hero { padding: 104px 8vw 56px; }
+      .hero .phone { border-width: 4px; border-radius: 20px; }
+      .hero-phones .phone:nth-child(3) { display: none; }
+      .phones .phone { width: 200px; }
+      footer { flex-direction: column; gap: 6px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="cs-nav">
+    <a href="../index.html" class="cs-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Retour au portfolio
+    </a>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div>
+      <h1>TechCorp</h1>
+      <p>Une application mobile de <strong>covoiturage entre collègues</strong>, en marque blanche, conçue en une semaine de sprints Scrum pour aider une entreprise de 800 salariés à réduire son empreinte carbone.</p>
+    </div>
+    <div class="hero-phones">
+      <div class="phone"><img src="accueil_passager.webp" alt="Accueil passager"/></div>
+      <div class="phone"><img src="reservation.webp" alt="Réservation d'un trajet"/></div>
+      <div class="phone"><img src="accueil_rh.webp" alt="Tableau de bord RH"/></div>
+    </div>
+  </header>
+
+  <dl class="brief">
+    <div><dt>Contexte</dt><dd>Projet d'école, module Agile Scrum<br/>IIM Digital School · février 2026</dd></div>
+    <div><dt>Équipe</dt><dd>5 personnes : Product Owner, Scrum Master, designer, 2 développeurs</dd></div>
+    <div><dt>Méthode</dt><dd>Scrum, 3 sprints en 4 jours<br/>FigJam, Figma, Jira</dd></div>
+    <div><dt>Livrables</dt><dd>Backlog priorisé, maquettes,<br/>landing page, présentation</dd></div>
+  </dl>
+
+  <!-- 01 Brief -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2><span>01</span>Le brief</h2>
+      <p>TechCorp veut réduire son empreinte carbone de 40 % d'ici 2027. Sur ses 3 sites (La Défense, Lyon, Nantes), le covoiturage existe déjà, mais de façon informelle : groupes WhatsApp dispersés, e-mails perdus, bouche-à-oreille. Contrainte en plus : l'app doit être en <strong>marque blanche</strong>, pour être revendue à d'autres entreprises.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>65 %</b><p><strong>des employés viennent seuls en voiture</strong> chaque jour, et seulement 5 % covoiturent déjà.</p></div>
+      <div class="stat"><b>35 %</b><p><strong>de l'empreinte carbone</strong> de l'entreprise vient de la mobilité des collaborateurs.</p></div>
+      <div class="stat"><b>30 %</b><p><strong>de covoitureurs réguliers en 6 mois</strong> : l'objectif fixé, soit 240 employés.</p></div>
+    </div>
+  </section>
+
+  <!-- 02 Utilisateurs -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2><span>02</span>Trois utilisateurs</h2>
+      <p>Trois profils aux attentes opposées. Nous avons construit un parcours pour chacun : l'app ne s'affiche pas de la même façon pour un passager, un conducteur ou une RH.</p>
+    </div>
+    <div class="personas">
+      <div class="persona"><h3>Sarah</h3><div class="who">Conductrice</div><p>Veut partager ses trajets sans devenir « le taxi » de tout le monde : elle doit <strong>garder le contrôle</strong>.</p></div>
+      <div class="persona"><h3>Marc</h3><div class="who">Passager</div><p>Craint l'annulation de dernière minute : il a besoin de <strong>savoir à qui il confie son trajet</strong> et d'une solution de secours.</p></div>
+      <div class="persona"><h3>Julie</h3><div class="who">RH, pilote du projet</div><p>Doit prouver que ça marche : elle a besoin de <strong>mesurer l'usage</strong> et d'animer la communauté.</p></div>
+    </div>
+  </section>
+
+  <!-- 03 Méthode -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2><span>03</span>La méthode Scrum</h2>
+      <p>Une semaine intensive : un backlog priorisé le mardi, puis trois sprints avec daily scrum, review et rétrospective chaque jour, jusqu'à la présentation du vendredi.</p>
+    </div>
+
+    <h3 class="sub" style="margin-top:0">Un backlog découpé en épics</h3>
+    <div class="epics">
+      <div class="epic"><small>MVP</small><h4>Compte</h4><p>Connexion avec l'e-mail de l'entreprise, activation, choix du rôle.</p></div>
+      <div class="epic"><small>MVP</small><h4>Recherche</h4><p>Trouver rapidement un covoiturage compatible.</p></div>
+      <div class="epic"><small>MVP</small><h4>Réservation et annulation</h4><p>Réserver, accepter ou refuser, annuler et être prévenu.</p></div>
+      <div class="epic"><small>MVP</small><h4>Profil</h4><p>Consulter le profil de l'autre avant de réserver ou d'accepter.</p></div>
+      <div class="epic"><small>MVP</small><h4>Statistiques</h4><p>KPIs pour les RH, CO₂ économisé pour chacun.</p></div>
+      <div class="epic v2"><small>V2</small><h4>Discussion et communauté</h4><p>Échanger entre covoitureurs, animer et modérer.</p></div>
+    </div>
+    <div class="story">
+      <b>En tant que</b> passager, <b>je veux pouvoir</b> réserver facilement un covoiturage qui correspond à mes horaires de bureau <b>afin de</b> gagner du temps sur mon trajet quotidien.
+      <small>Exemple de user story · 13 points</small>
+    </div>
+
+    <h3 class="sub">Trois sprints</h3>
+    <div class="sprints">
+      <div class="sprint"><h4>Sprint 1</h4><div class="when">Mardi et mercredi</div>
+        <ul class="list"><li>Parcours de connexion</li><li>Réservation</li><li>Recherche</li><li>Gestion des trajets</li></ul></div>
+      <div class="sprint"><h4>Sprint 2</h4><div class="when">Jeudi</div>
+        <ul class="list"><li>Vue conducteur et publication de trajets</li><li>Profils passager et conducteur</li><li>Accueil RH</li><li>Demandes, discussion, annulation</li></ul></div>
+      <div class="sprint"><h4>Sprint 3</h4><div class="when">Vendredi</div>
+        <ul class="list"><li>Communauté et modération</li><li>Historique des trajets</li><li>Roadmap et présentation</li></ul></div>
+    </div>
+    <p class="caption" style="margin-top:20px">Resté dans le backlog pour la suite : évaluation des trajets, export des données RH, personnalisation par entreprise cliente.</p>
+  </section>
+
+  <!-- 04 Écrans -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2><span>04</span>L'application</h2>
+      <p>Chaque écran répond à un frein identifié dans le brief. Faites défiler les rangées pour voir tous les écrans.</p>
+    </div>
+
+    <div class="flow">
+      <div class="flow-head"><h3>Un profil qui crée la confiance</h3>
+        <p>Connexion avec l'adresse e-mail de l'entreprise uniquement, choix du rôle, puis des préférences (musique, discussion, animaux, fumeur…) pour matcher avec des collègues compatibles.</p></div>
+      <div class="phones">
+        <figure><div class="phone"><img src="role.webp" alt="Choix du rôle" loading="lazy"/></div><figcaption>Choix du rôle</figcaption></figure>
+        <figure><div class="phone"><img src="preferences.webp" alt="Préférences" loading="lazy"/></div><figcaption>Préférences et jours</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-head"><h3>Passager : trouver et réserver</h3>
+        <p>L'accueil montre les prochains trajets et des collègues suggérés. La recherche propose des courses conseillées selon l'horaire, et chaque trajet affiche le profil du conducteur et l'itinéraire avant de réserver.</p></div>
+      <div class="phones">
+        <figure><div class="phone"><img src="accueil_passager.webp" alt="Accueil passager" loading="lazy"/></div><figcaption>Accueil</figcaption></figure>
+        <figure><div class="phone"><img src="recherche.webp" alt="Recherche" loading="lazy"/></div><figcaption>Recherche</figcaption></figure>
+        <figure><div class="phone"><img src="reservation.webp" alt="Réservation" loading="lazy"/></div><figcaption>Réservation</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-head"><h3>Conductrice : garder le contrôle</h3>
+        <p>Pour Sarah, qui ne veut pas devenir « le taxi » de tout le monde : elle publie ses trajets et valide chaque demande, en voyant d'abord qui la fait.</p></div>
+      <div class="phones">
+        <figure><div class="phone"><img src="accueil_conducteur.webp" alt="Accueil conducteur" loading="lazy"/></div><figcaption>Accueil conducteur</figcaption></figure>
+        <figure><div class="phone"><img src="creer.webp" alt="Créer un trajet" loading="lazy"/></div><figcaption>Créer un trajet</figcaption></figure>
+        <figure><div class="phone"><img src="demande.webp" alt="Demandes de trajet" loading="lazy"/></div><figcaption>Accepter ou refuser</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-head"><h3>Gérer les imprévus</h3>
+        <p>Pour Marc, qui craint l'annulation de dernière minute : il est prévenu tout de suite et l'app lui propose des alternatives. La discussion permet de prévenir d'un retard ou d'envoyer sa position.</p></div>
+      <div class="phones">
+        <figure><div class="phone"><img src="alternatives.webp" alt="Alternatives après annulation" loading="lazy"/></div><figcaption>Alternatives</figcaption></figure>
+        <figure><div class="phone"><img src="discussion.webp" alt="Discussion" loading="lazy"/></div><figcaption>Discussion</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-head"><h3>RH : piloter et animer</h3>
+        <p>Pour Julie : un tableau de bord avec les utilisateurs actifs, les trajets et le CO₂ économisé, et un espace communauté pour répondre aux signalements et modérer.</p></div>
+      <div class="phones">
+        <figure><div class="phone"><img src="accueil_rh.webp" alt="Tableau de bord RH" loading="lazy"/></div><figcaption>Tableau de bord</figcaption></figure>
+        <figure><div class="phone"><img src="moderation.webp" alt="Modération de la communauté" loading="lazy"/></div><figcaption>Communauté</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Marque blanche -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2><span>05</span>Marque blanche</h2>
+      <p>Une identité volontairement neutre, pensée pour être remplacée par celle de chaque entreprise cliente.</p>
+    </div>
+    <div class="wb">
+      <div class="landing"><img src="landing.webp" alt="Landing page de Techc_" loading="lazy"/></div>
+      <div class="txt">
+        <p>Sous le nom <strong>Techc_</strong>, nous avons conçu une landing page pour présenter l'offre aux entreprises : facilité, confiance, écologie, organisation, visibilité RH et esprit de communauté.</p>
+        <p>La charte repose sur peu d'éléments (4 couleurs, 2 typographies, un jeu d'icônes et d'illustrations), pour que logo et couleurs puissent changer sans toucher au reste.</p>
+        <div class="swatches">
+          <span style="--c:#12283f">#12283F</span><span style="--c:#e5672f">#E5672F</span><span style="--c:#a79dfd">#A79DFD</span><span style="--c:#f3f3f3;color:#12283f">#F3F3F3</span>
+        </div>
+        <p class="caption">Typographies : Alexandria pour les titres, Poppins pour les textes.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Balak Djeassi</span>
+    <span>TechCorp · Projet d'école · 2026</span>
+  </footer>
+
+</body>
+</html>

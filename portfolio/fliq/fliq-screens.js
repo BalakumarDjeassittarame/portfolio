@@ -427,7 +427,7 @@ function Screen2Intentions() {
       color: C.textSec,
       marginTop: 8
     }
-  }, "Be honest \u2014 no judgment here.")), /*#__PURE__*/React.createElement("div", {
+  }, "Be honest, no judgment here.")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',

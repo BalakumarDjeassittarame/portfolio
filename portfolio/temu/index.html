@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temu · Balak Djeassi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --orange: #fb7701;
+      --bg: #0f0d0c; --surface: #181513;
+      --line: rgba(255,255,255,0.08);
+      --text: #f5f1ec; --text-2: #b9b0a6; --text-3: #7d746b;
+      --ease: cubic-bezier(0.16,1,0.3,1);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
+    a { color: inherit; }
+    h1, h2, h3, h4 { font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: -0.02em; line-height: 1.1; }
+    strong { color: var(--text); font-weight: 500; }
+
+    /* ── NAV ── */
+    .cs-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 8vw; background: linear-gradient(180deg, rgba(15,13,12,0.95), transparent); backdrop-filter: blur(12px); }
+    .cs-back { display: inline-flex; align-items: center; gap: 10px; font: 600 13px 'Bricolage Grotesque'; color: var(--text-2); text-decoration: none; border: 1px solid var(--line); padding: 8px 18px; border-radius: 100px; background: rgba(255,255,255,0.04); transition: color 0.2s, border-color 0.2s; }
+    .cs-back:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    /* ── HERO ── */
+    .hero { display: grid; grid-template-columns: 1fr 1.25fr; gap: 6vw; align-items: center; padding: 140px 8vw 80px; min-height: 92vh; }
+    .hero h1 { font-weight: 800; font-size: clamp(72px, 10vw, 150px); line-height: 0.9; letter-spacing: -0.04em; color: var(--orange); margin-bottom: 28px; }
+    .hero p { font-size: clamp(17px, 1.6vw, 21px); color: var(--text-2); max-width: 480px; margin-bottom: 36px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 100px; background: var(--orange); color: #fff; font: 700 14px 'Bricolage Grotesque'; text-decoration: none; transition: transform 0.25s var(--ease); }
+    .btn:hover { transform: translateY(-2px); }
+    .hero-shot { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,0.5); aspect-ratio: 1432 / 1000; background: #fff; }
+    .hero-shot img { width: 100%; display: block; }
+
+    /* ── BRIEF ── */
+    .brief { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .brief div { padding: 32px 8vw 32px 0; }
+    .brief div:first-child { padding-left: 8vw; }
+    .brief dt { font-size: 12px; color: var(--text-3); margin-bottom: 8px; }
+    .brief dd { font: 600 15px/1.45 'Bricolage Grotesque'; }
+
+    /* ── SECTIONS ── */
+    .sec { padding: 120px 8vw; border-top: 1px solid var(--line); }
+    .sec-head { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6vw; margin-bottom: 56px; align-items: end; }
+    .sec-head h2 { font-weight: 800; font-size: clamp(34px, 4.4vw, 58px); }
+    .sec-head h2 span { color: var(--text-3); font-weight: 600; margin-right: 14px; }
+    .sec-head p { color: var(--text-2); font-size: 16px; }
+
+    /* Chiffres clés */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 64px; }
+    .stat { padding: 30px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+    .stat b { display: block; font: 800 clamp(44px, 5vw, 68px)/1 'Bricolage Grotesque'; letter-spacing: -0.03em; color: var(--orange); margin-bottom: 12px; }
+    .stat b small { font-size: 0.45em; color: var(--text-3); font-weight: 600; }
+    .stat p { color: var(--text-2); font-size: 14px; }
+
+    /* Tableau d'analyse */
+    .tbl-wrap { overflow-x: auto; }
+    table { width: 100%; min-width: 820px; border-collapse: collapse; font-size: 14px; }
+    th { text-align: left; font-weight: 500; font-size: 12px; color: var(--text-3); padding: 0 16px 12px 0; border-bottom: 1px solid rgba(255,255,255,0.18); }
+    td { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--text-2); }
+    td:first-child { color: var(--text); white-space: nowrap; }
+    td:nth-child(2) { color: var(--text); }
+    td:nth-child(3) { white-space: nowrap; }
+    .note { margin-top: 18px; font-size: 13px; color: var(--text-3); }
+
+    /* Piliers */
+    .pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .pillar { padding: 28px; border-top: 3px solid var(--orange); background: var(--surface); border-radius: 0 0 14px 14px; }
+    .pillar h3 { font-size: 22px; margin-bottom: 10px; }
+    .pillar p { color: var(--text-2); font-size: 14px; }
+
+    /* Écrans de la refonte */
+    .screen { display: grid; grid-template-columns: 1.3fr 1fr; gap: 6vw; align-items: start; padding: 64px 0; border-bottom: 1px solid var(--line); }
+    .screen:last-child { border-bottom: 0; }
+    .screen.flip { grid-template-columns: 1fr 1.3fr; }
+    .screen.flip .shot { order: 2; }
+    .shot { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: #fff; box-shadow: 0 24px 60px rgba(0,0,0,0.4); }
+    .shot img { width: 100%; display: block; }
+    .shot.crop { max-height: 620px; overflow-y: auto; scrollbar-width: thin; }
+    .shot.small { max-width: 380px; justify-self: center; }
+    .screen .txt { position: sticky; top: 110px; }
+    .screen h3 { font-size: clamp(26px, 2.6vw, 36px); margin-bottom: 16px; }
+    .screen p { color: var(--text-2); margin-bottom: 14px; }
+    .screen ul { list-style: none; display: grid; gap: 10px; margin-top: 18px; }
+    .screen li { position: relative; padding-left: 20px; color: var(--text-2); font-size: 15px; }
+    .screen li::before { content: ''; position: absolute; left: 2px; top: 0.62em; width: 6px; height: 6px; border-radius: 1px; background: var(--orange); }
+    .hint { font-size: 12px; color: var(--text-3); margin-top: 10px; }
+
+    /* Impact */
+    .goals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .goal { padding: 30px; border: 1px solid var(--line); border-radius: 14px; }
+    .goal h3 { font-size: 20px; margin-bottom: 14px; }
+    .goal p { color: var(--text-2); font-size: 14px; }
+
+    footer { border-top: 1px solid var(--line); padding: 40px 8vw; display: flex; justify-content: space-between; font-size: 13px; color: var(--text-3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1023px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 120px; }
+      .brief { grid-template-columns: repeat(2, 1fr); }
+      .brief div, .brief div:first-child { padding: 24px 0 24px 8vw; }
+      .sec { padding: 88px 8vw; }
+      .sec-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+      .stats { grid-template-columns: 1fr; }
+      .pillars { grid-template-columns: repeat(2, 1fr); }
+      .screen, .screen.flip { grid-template-columns: 1fr; gap: 28px; padding: 48px 0; }
+      .screen.flip .shot { order: 0; }
+      .screen .txt { position: static; }
+      .goals { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .cs-nav { padding: 14px 6vw; }
+      .hero { padding: 104px 8vw 56px; }
+      .pillars { grid-template-columns: 1fr; }
+      .shot.crop { max-height: 480px; }
+      footer { flex-direction: column; gap: 6px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="cs-nav">
+    <a href="../index.html" class="cs-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Retour au portfolio
+    </a>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div>
+      <h1>Temu</h1>
+      <p>Repenser un géant de l'e-commerce pour allier <strong>accessibilité, éthique et durabilité</strong>, sans renoncer à ce qui fait son succès.</p>
+      <a class="btn" href="https://www.figma.com/proto/cETDglQnUmE6jDF9pDhQvp/Temu-Prototype" target="_blank" rel="noopener">
+        Voir le prototype
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      </a>
+    </div>
+    <div class="hero-shot"><img src="accueil.webp" alt="Page d'accueil repensée de Temu"/></div>
+  </header>
+
+  <dl class="brief">
+    <div><dt>Contexte</dt><dd>Projet d'école<br/>IIM Digital School · 2025</dd></div>
+    <div><dt>Équipe</dt><dd>Lysandre Cahuzac, Allan Chanou,<br/>Axel Benhamou et moi</dd></div>
+    <div><dt>Outils</dt><dd>FigJam, Figma,<br/>EcoIndex, WAVE (AIM)</dd></div>
+    <div><dt>Livrables</dt><dd>Audit, prototype Figma,<br/>présentation</dd></div>
+  </dl>
+
+  <!-- 01 Constat -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2><span>01</span>Le constat</h2>
+      <p>Temu séduit par ses prix, mais son modèle soulève de vraies limites environnementales, sociales et éthiques. Nous avons audité le parcours d'achat actuel sous trois angles : l'éco-conception, l'accessibilité et l'éthique commerciale.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>6<small> /100</small></b><p><strong>EcoIndex de la page d'accueil (note G).</strong> 6,3 Mo par page, plus de 3 500 éléments et 311 requêtes serveur, là où la cible est de 1 Mo, 600 éléments et 40 requêtes.</p></div>
+      <div class="stat"><b>4,2<small> /10</small></b><p><strong>Score d'accessibilité AIM.</strong> 45 problèmes de contraste, 60 alertes et un site qui devient difficile à utiliser zoomé à 200 %.</p></div>
+      <div class="stat"><b>2,1<small> /5</small></b><p><strong>Note Trustpilot sur plus de 43 000 avis.</strong> Délais de livraison, produits non conformes, publicités jugées mensongères : la confiance est entamée.</p></div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Étape</th><th>Problème constaté</th><th>Type</th><th>Impact principal</th></tr></thead>
+        <tbody>
+          <tr><td>Accueil</td><td>Bombardement d'informations (promos, livraison gratuite, vendeur vedette, Black Friday)</td><td>UX · Écologie</td><td>Surcharge cognitive et visuelle, incitation à l'achat</td></tr>
+          <tr><td>Accueil</td><td>Informations non structurées, prix et promotions mis en avant</td><td>UX · Accessibilité</td><td>Lecture difficile, perte de repères</td></tr>
+          <tr><td>Accueil</td><td>Couleurs très vives, mal perçues par les personnes daltoniennes ou DYS</td><td>Accessibilité</td><td>Illisibilité, exclusion d'une partie des utilisateurs</td></tr>
+          <tr><td>Accueil</td><td>Temps de chargement global trop long</td><td>Écologie · Performance</td><td>Expérience ralentie, empreinte carbone accrue</td></tr>
+          <tr><td>Produit</td><td>Absence d'informations sur la durabilité et l'origine des produits</td><td>Éthique · Écologie</td><td>Manque de transparence, choix non éclairé</td></tr>
+          <tr><td>Produit</td><td>Impossible de revenir en arrière (ouvre une nouvelle fenêtre)</td><td>UX · Technique</td><td>Rupture du parcours, frustration</td></tr>
+          <tr><td>Panier</td><td>Pop-up imposant un minimum d'achat de 20 €</td><td>Dark pattern</td><td>Incitation abusive à augmenter le panier</td></tr>
+          <tr><td>Panier</td><td>Multiplication d'étapes et de boutons secondaires</td><td>UX</td><td>Parcours confus, perte de confiance</td></tr>
+          <tr><td>Global</td><td>Scroll infini et images partout, sur toutes les pages</td><td>UX · Écologie</td><td>Achat impulsif, consommation de ressources</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Extrait de notre grille d'analyse (FigJam).</p>
+  </section>
+
+  <!-- 02 Piliers -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2><span>02</span>Nos quatre piliers</h2>
+      <p>Plutôt que d'ajouter des fonctionnalités, nous avons retiré ce qui pousse à l'achat impulsif et remis l'utilisateur en contrôle. Chaque décision de la refonte répond à l'un de ces piliers.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><h3>Éco-conception</h3><p>Réduire les impacts dès la conception : pages plus légères, moins d'images, fin du scroll infini.</p></div>
+      <div class="pillar"><h3>Éthique</h3><p>Transparence sur les produits, promotions informatives plutôt que persuasives, aucun dark pattern.</p></div>
+      <div class="pillar"><h3>Accessibilité</h3><p>Concevoir pour tous les handicaps (daltonisme, cécité, mobilité réduite) et viser la conformité RGAA / WCAG.</p></div>
+      <div class="pillar"><h3>Inclusion</h3><p>Concevoir pour tous les publics, quels que soient le genre, l'origine ou la couleur de peau.</p></div>
+    </div>
+  </section>
+
+  <!-- 03 Refonte -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2><span>03</span>La refonte</h2>
+      <p>Nous avons redessiné tout le parcours d'achat, de l'accueil à la confirmation de commande.</p>
+    </div>
+
+    <div class="screen">
+      <div class="shot crop"><img src="accueil.webp" alt="Accueil repensé" loading="lazy"/></div>
+      <div class="txt">
+        <h3>Accueil</h3>
+        <p>Redonner de la respiration à la page : fini la succession de produits sans lien, place à une <strong>sélection claire et raisonnée</strong> et à des catégories mieux hiérarchisées.</p>
+        <ul>
+          <li><strong>Nos produits vedettes</strong> : une sélection personnalisée.</li>
+          <li><strong>Seconde vie</strong> : des produits reconditionnés, réparables ou recyclables mis en avant, pour sensibiliser à des achats plus durables.</li>
+        </ul>
+        <p class="hint">Faites défiler la capture pour voir toute la page.</p>
+      </div>
+    </div>
+
+    <div class="screen flip">
+      <div class="shot"><img src="categories.webp" alt="Menu des catégories" loading="lazy"/></div>
+      <div class="txt">
+        <h3>Menu des catégories</h3>
+        <p>Au survol de « Catégories », toutes les catégories s'affichent de manière simple et lisible.</p>
+        <p>Nous avons <strong>supprimé les images</strong> qui accompagnaient chaque catégorie : elles surchargeaient la page et alourdissaient son chargement.</p>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="shot crop"><img src="produit.webp" alt="Fiche produit" loading="lazy"/></div>
+      <div class="txt">
+        <h3>Fiche produit</h3>
+        <p>Une fiche pensée pour une <strong>lecture claire et responsable</strong>.</p>
+        <ul>
+          <li>Les éléments trop commerciaux (Black Friday, « plus que quelques articles ») sont supprimés. Seule la promotion réelle reste, présentée de façon informative.</li>
+          <li>Chaque couleur est accompagnée d'un texte, pour les personnes daltoniennes.</li>
+          <li>Description, livraison et avis sont clairement séparés, et les contenus réorganisés pour la navigation au clavier.</li>
+          <li>Une section <strong>Produits similaires</strong> remplace le scroll infini.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="screen flip">
+      <div class="shot small"><img src="panier.webp" alt="Panier en panneau latéral" loading="lazy"/></div>
+      <div class="txt">
+        <h3>Panier latéral</h3>
+        <p>Le panier devient un <strong>panneau latéral</strong> accessible à tout moment depuis le header, pour consulter ses articles sans quitter la page.</p>
+        <p>Il se ferme en un clic grâce à une croix bien visible : une navigation plus fluide et moins intrusive que sur le site actuel, où le panier occupe une partie de l'écran sans pouvoir être masqué.</p>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="shot"><img src="commande.webp" alt="Page commande et livraison" loading="lazy"/></div>
+      <div class="txt">
+        <h3>Commande et arrondi solidaire</h3>
+        <p>Une interface épurée, centrée sur l'essentiel : prix, livraison et quantité.</p>
+        <p>Un <strong>bouton d'arrondi solidaire</strong> permet de compléter le total à l'euro supérieur, la différence étant reversée à un projet de reforestation locale. Discret et non intrusif, il laisse à l'utilisateur le <strong>choix libre</strong> d'y participer.</p>
+        <div class="shot small" style="margin-top:20px"><img src="arrondi.webp" alt="Pop-up d'arrondi solidaire" loading="lazy"/></div>
+      </div>
+    </div>
+
+    <div class="screen flip">
+      <div class="shot small"><img src="connexion.webp" alt="Connexion ou achat en invité" loading="lazy"/></div>
+      <div class="txt">
+        <h3>Paiement sans compte</h3>
+        <p>Nous avons ajouté la possibilité de <strong>continuer en tant qu'invité</strong> : acheter sans créer de compte, pour respecter la liberté et les préférences de chacun.</p>
+        <p>Le paiement reste une page épurée, utilisable aussi bien à la souris qu'au clavier, notamment pour les personnes en situation de handicap moteur. La confirmation d'achat se limite ensuite à l'essentiel, sans suggestions ni publicités.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Impact -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2><span>04</span>Impact visé</h2>
+      <p>Des objectifs, pas des résultats mesurés : le projet s'arrête au prototype. Ils donnent la direction et la façon de la suivre.</p>
+    </div>
+    <div class="goals">
+      <div class="goal"><h3>Pour la planète</h3><p>Viser une réduction de <strong>15 % de l'empreinte carbone</strong> grâce à des pages plus légères et moins de requêtes.</p></div>
+      <div class="goal"><h3>Pour Temu</h3><p>Se différencier par une image RSE forte, avec un objectif de <strong>+20 % d'engagement client</strong> et une meilleure fidélisation.</p></div>
+      <div class="goal"><h3>Comment le suivre</h3><p>Score EcoIndex, satisfaction Trustpilot, taux de rétention et score RSE.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Balak Djeassi</span>
+    <span>Temu · Projet d'école · 2025</span>
+  </footer>
+
+</body>
+</html>

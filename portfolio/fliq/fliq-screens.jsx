@@ -254,7 +254,7 @@ function Screen2Intentions() {
         <div style={{
           fontFamily: jakartaSans, fontSize: 15, fontWeight: 500,
           color: C.textSec, marginTop: 8,
-        }}>Be honest — no judgment here.</div>
+        }}>Be honest, no judgment here.</div>
       </div>
 
       {/* 2×2 grid */}

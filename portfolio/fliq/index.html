@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fliq — Case Study · Balak Djeassi</title>
+  <title>Fliq · Balak Djeassi</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -53,11 +53,6 @@
       transition: color 0.2s, border-color 0.2s, background 0.2s;
     }
     .cs-back:hover { color: var(--text); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); }
-    .cs-nav-tag {
-      font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700;
-      background: linear-gradient(135deg, var(--rose), var(--peach));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
 
     /* ── HERO ── */
     .cs-hero {
@@ -79,17 +74,6 @@
       background: radial-gradient(ellipse, rgba(245,176,138,0.06), transparent 65%);
       pointer-events: none;
     }
-    .cs-label {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--rose);
-      border: 1px solid rgba(232,98,122,0.3);
-      padding: 6px 16px; border-radius: 100px;
-      margin-bottom: 32px;
-      opacity: 0; animation: fadeUp 0.7s 0.2s var(--ease) forwards;
-    }
-    .cs-label-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.6);} }
 
     .cs-title {
       font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
@@ -228,6 +212,33 @@
       from { opacity:0; transform: translateY(20px); }
       to   { opacity:1; transform: none; }
     }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1023px) {
+      .cs-hero { min-height: auto; padding: 130px 8vw 72px; }
+      .cs-hero-bottom { flex-direction: column; align-items: flex-start; gap: 32px; }
+      .cs-meta { text-align: left; flex-direction: row; flex-wrap: wrap; gap: 10px 24px; }
+      .cs-meta-item { justify-content: flex-start; }
+      .cs-brief { grid-template-columns: repeat(2, 1fr); }
+      .cs-brief-item:nth-child(2) { border-right: none; }
+      .cs-brief-item:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+      .cs-section { padding: 88px 8vw; }
+      .cs-section-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 40px; }
+      .cs-section-desc { text-align: left; }
+      /* Rangée de téléphones : pleine largeur, défilement avec aimantation */
+      .cs-phones { margin: 0 -8vw; padding: 0 8vw 20px; scroll-snap-type: x mandatory; scroll-padding: 0 8vw; gap: 20px; }
+      .cs-phone-wrap { scroll-snap-align: start; }
+    }
+    @media (max-width: 600px) {
+      .cs-nav { padding: 14px 6vw; }
+      .cs-back { padding: 8px 14px; font-size: 12px; }
+      .cs-hero { padding: 110px 8vw 56px; }
+      .cs-title { font-size: clamp(72px, 26vw, 140px); margin-bottom: 24px; }
+      .cs-brief-item { padding: 24px 6vw; }
+      .cs-section { padding: 72px 8vw; }
+      .cs-section-num { font-size: 56px; }
+      .cs-footer { flex-direction: column; gap: 8px; text-align: center; padding: 36px 8vw; }
+    }
   </style>
 </head>
 <body>
@@ -238,14 +249,12 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
       Retour au portfolio
     </a>
-    <span class="cs-nav-tag">Fliq · Case Study</span>
   </nav>
 
   <!-- Hero -->
   <section class="cs-hero">
     <div class="cs-hero-glow"></div>
     <div class="cs-hero-glow2"></div>
-    <div class="cs-label"><span class="cs-label-dot"></span>Case Study · 2025</div>
     <h1 class="cs-title">Fliq</h1>
     <div class="cs-hero-bottom">
       <p class="cs-tagline">
@@ -287,7 +296,7 @@
         <div class="cs-section-num">01</div>
         <h2 class="cs-section-title">Premiers <span>pas</span></h2>
       </div>
-      <p class="cs-section-desc">De l'écran d'accueil à la création du profil — une expérience d'onboarding guidée, chaleureuse et centrée sur l'intention.</p>
+      <p class="cs-section-desc">De l'écran d'accueil à la création du profil : une expérience d'onboarding guidée, chaleureuse et centrée sur l'intention.</p>
     </div>
     <div class="cs-phones">
       <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s1"></div></div><span class="cs-phone-label">Splash</span></div>
@@ -305,7 +314,7 @@
         <div class="cs-section-num">02</div>
         <h2 class="cs-section-title">Explorer &amp; <span>Matcher</span></h2>
       </div>
-      <p class="cs-section-desc">Le cœur de l'application — le swipe repensé avec plus de contexte, le Super Like et l'écran de like mutuel.</p>
+      <p class="cs-section-desc">Le cœur de l'application : le swipe repensé avec plus de contexte, le Super Like et l'écran de like mutuel.</p>
     </div>
     <div class="cs-phones">
       <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s5"></div></div><span class="cs-phone-label">Swipe</span></div>
@@ -323,7 +332,7 @@
         <div class="cs-section-num">03</div>
         <h2 class="cs-section-title">Se <span>connecter</span></h2>
       </div>
-      <p class="cs-section-desc">Après le match — la messagerie conçue pour lancer des conversations authentiques avec le bon contexte.</p>
+      <p class="cs-section-desc">Après le match, la messagerie conçue pour lancer des conversations authentiques avec le bon contexte.</p>
     </div>
     <div class="cs-phones">
       <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s10"></div></div><span class="cs-phone-label">Messages</span></div>
@@ -338,7 +347,7 @@
         <div class="cs-section-num">04</div>
         <h2 class="cs-section-title">Mon <span>profil</span></h2>
       </div>
-      <p class="cs-section-desc">Un profil riche et personnalisable — présenter qui on est au-delà d'une simple photo.</p>
+      <p class="cs-section-desc">Un profil riche et personnalisable : présenter qui on est au-delà d'une simple photo.</p>
     </div>
     <div class="cs-phones">
       <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s9"></div></div><span class="cs-phone-label">Voir le profil</span></div>
@@ -355,7 +364,7 @@
         <div class="cs-section-num">05</div>
         <h2 class="cs-section-title">Contrôle &amp; <span>préférences</span></h2>
       </div>
-      <p class="cs-section-desc">Filtres avancés, offre Premium, notifications, signalement — tout ce qui donne à l'utilisateur le contrôle de son expérience.</p>
+      <p class="cs-section-desc">Filtres avancés, offre Premium, notifications, signalement : tout ce qui donne à l'utilisateur le contrôle de son expérience.</p>
     </div>
     <div class="cs-phones">
       <div class="cs-phone-wrap"><div class="cs-phone-slot"><div class="cs-phone-inner" id="s12"></div></div><span class="cs-phone-label">Filtres</span></div>

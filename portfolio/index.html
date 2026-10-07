@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Balak Djeassi — Product Designer</title>
+  <title>Balak Djeassi · Product Designer</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,6 +12,9 @@
 
   <!-- Three.js (requis pour l'effet fluid) -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+  <!-- Intro : une seule fois par visite -->
+  <script>try{if(sessionStorage.getItem("introSeen"))document.documentElement.classList.add("intro-seen")}catch(e){}</script>
 
   <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
@@ -97,64 +100,100 @@
         <div class="section-tag">Projets sélectionnés</div>
         <h2 class="section-title">Mes <span>Travaux</span></h2>
       </div>
-      <div class="section-count">02</div>
+      <div class="section-count">04</div>
     </div>
 
-    <!-- Projet 1 — Popa -->
-    <div class="proj-row pr5 reveal" data-href="popa/index.html">
-      <div class="proj-top">
-        <span class="proj-num">01</span>
-        <span class="proj-name">Popa</span>
-        <div class="proj-meta">
-          <span class="proj-cat">E-commerce · Web</span>
-          <span class="proj-yr">2025</span>
-          <div class="proj-arrow">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            <span class="proj-arrow-label">Voir ce projet</span>
-          </div>
-        </div>
-      </div>
-      <div class="proj-tags-bar">
-        <span class="ptag">UX Research</span>
-        <span class="ptag">UI Design</span>
-        <span class="ptag">E-commerce</span>
-        <span class="ptag">Figma</span>
-        <span class="ptag">Design System</span>
-        <span class="ptag">Prototypage</span>
-      </div>
-      <div class="proj-expand">
-        <div class="proj-expand-inner">
-          <p class="proj-desc">Plateforme e-commerce dédiée aux figurines de collection. De la recherche utilisateur à la conception d'une expérience d'achat intuitive — UX research, UI design et prototype haute fidélité.</p>
-        </div>
-      </div>
+    <!-- Filtres (générés depuis les tags des projets) -->
+    <div class="work-filters reveal" id="workFilters">
+      <div class="wf-chips" id="wfChips"></div>
+      <button class="wf-clear" id="wfClear" type="button">✕ Effacer</button>
+      <span class="wf-count" id="wfCount"></span>
     </div>
 
-    <!-- Projet 2 — Fliq -->
-    <div class="proj-row pr6 reveal reveal-delay-1" data-href="fliq/index.html">
-      <div class="proj-top">
-        <span class="proj-num">02</span>
-        <span class="proj-name">Fliq</span>
-        <div class="proj-meta">
-          <span class="proj-cat">Mobile App · Dating</span>
-          <span class="proj-yr">2025</span>
-          <div class="proj-arrow">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            <span class="proj-arrow-label">Voir ce projet</span>
+    <!-- Accordéon (desktop) / carrousel (mobile) -->
+    <div class="work-acc reveal" id="workAcc">
+
+      <!-- Projet — Temu -->
+      <a class="acc-p on" href="temu/index.html" style="--glow: #fb7701">
+        <div class="acc-media"><img src="temu/accueil.webp" alt="Aperçu de la refonte de Temu" loading="lazy" draggable="false" /></div>
+        <div class="acc-shade"></div>
+        <div class="acc-line"></div>
+        <div class="acc-vt"><small>01</small>Temu</div>
+        <div class="acc-txt">
+          <div class="acc-meta"><span>E-commerce · Refonte</span><i></i><span>2025</span></div>
+          <h3>Temu</h3>
+          <p>Audit et refonte du parcours d'achat de Temu pour un e-commerce plus accessible, éthique et éco-conçu : EcoIndex, accessibilité, dark patterns, puis prototype Figma.</p>
+          <div class="acc-foot">
+            <div class="acc-tags"><span>UX Research</span><span>UI Design</span><span>E-commerce</span><span>Accessibilité</span><span>Éco-conception</span></div>
+            <span class="acc-btn">Voir le projet <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
           </div>
         </div>
-      </div>
-      <div class="proj-tags-bar">
-        <span class="ptag">UI Design</span>
-        <span class="ptag">iOS</span>
-        <span class="ptag">Design System</span>
-        <span class="ptag">Figma</span>
-        <span class="ptag">Prototypage</span>
-        <span class="ptag">21 Écrans</span>
-      </div>
-      <div class="proj-expand">
-        <div class="proj-expand-inner">
-          <p class="proj-desc">Application de rencontre nouvelle génération — 21 écrans haute fidélité couvrant l'onboarding, la découverte, le matching et la messagerie. Un système de design complet pensé pour iOS.</p>
+      </a>
+
+      <!-- Projet — TechCorp -->
+      <a class="acc-p" href="techcorp/index.html" style="--glow: #a79dfd">
+        <div class="acc-media"><img src="techcorp/landing.webp" alt="Aperçu du projet TechCorp" loading="lazy" draggable="false" /></div>
+        <div class="acc-shade"></div>
+        <div class="acc-line"></div>
+        <div class="acc-vt"><small>02</small>TechCorp</div>
+        <div class="acc-txt">
+          <div class="acc-meta"><span>Mobile App · Scrum</span><i></i><span>2026</span></div>
+          <h3>TechCorp</h3>
+          <p>Application de covoiturage entre collègues en marque blanche, conçue en une semaine de sprints Scrum : backlog, parcours passager, conducteur et RH, landing page.</p>
+          <div class="acc-foot">
+            <div class="acc-tags"><span>UX Research</span><span>UI Design</span><span>Mobile</span><span>Scrum</span><span>Design System</span></div>
+            <span class="acc-btn">Voir le projet <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
         </div>
+      </a>
+
+      <!-- Projet — Popa -->
+      <a class="acc-p" href="popa/index.html" style="--glow: var(--rose)">
+        <div class="acc-media"><img src="popa/Accueil.webp" alt="Aperçu du site Popa" loading="lazy" draggable="false" /></div>
+        <div class="acc-shade"></div>
+        <div class="acc-line"></div>
+        <div class="acc-vt"><small>03</small>Popa</div>
+        <div class="acc-txt">
+          <div class="acc-meta"><span>E-commerce · Web</span><i></i><span>2025</span></div>
+          <h3>Popa</h3>
+          <p>Plateforme e-commerce dédiée aux figurines de collection. De la recherche utilisateur à la conception d'une expérience d'achat intuitive : UX research, UI design et prototype haute fidélité.</p>
+          <div class="acc-foot">
+            <div class="acc-tags"><span>UX Research</span><span>UI Design</span><span>E-commerce</span><span>Design System</span></div>
+            <span class="acc-btn">Voir le projet <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Projet 2 — Fliq -->
+      <a class="acc-p" href="fliq/index.html" style="--glow: #f09070">
+        <div class="acc-media">
+          <div class="fliq-cover" aria-hidden="true">
+            <div class="phone"><span>fliq</span></div><div class="phone"><span>♥</span></div><div class="phone"><span>fliq</span></div>
+          </div>
+        </div>
+        <div class="acc-shade"></div>
+        <div class="acc-line"></div>
+        <div class="acc-vt"><small>04</small>Fliq</div>
+        <div class="acc-txt">
+          <div class="acc-meta"><span>Mobile App · Dating</span><i></i><span>2025</span></div>
+          <h3>Fliq</h3>
+          <p>Application de rencontre nouvelle génération : 21 écrans haute fidélité couvrant l'onboarding, la découverte, le matching et la messagerie. Un système de design complet pensé pour iOS.</p>
+          <div class="acc-foot">
+            <div class="acc-tags"><span>UI Design</span><span>Mobile</span><span>iOS</span><span>Design System</span></div>
+            <span class="acc-btn">Voir le projet <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Navigation du carrousel (mobile / tablette) -->
+    <div class="acc-nav">
+      <div class="acc-dots" id="accDots"></div>
+      <span class="acc-idx" id="accIdx"></span>
+      <div class="acc-arrows">
+        <button id="accPrev" type="button" aria-label="Projet précédent">←</button>
+        <button id="accNext" type="button" aria-label="Projet suivant">→</button>
       </div>
     </div>
 
@@ -213,68 +252,142 @@
       <div class="section-tag">Parcours</div>
       <h2 class="section-title">Expériences &amp; <span>Formation</span></h2>
     </div>
-    <div class="ex-grid">
+    <div class="cv">
 
-      <!-- Colonne gauche : Expériences -->
-      <div>
-        <div class="ex-col-title">Expériences professionnelles</div>
-
-        <div class="ex-item">
-          <div class="ex-date">Août 2025 — Aujourd'hui · Alternance</div>
-          <div class="ex-role">Chef de Projet Digital</div>
-          <div class="ex-company">Altavia Foundation <span class="ex-badge">Saint-Ouen</span></div>
-          <p class="ex-desc">Développement Webflow, optimisation UX/UI, pilotage newsletters et analyse KPI, coordination prestataires, ateliers utilisateurs, stratégie SEO/SEA.</p>
+      <div class="cv-block cv-xp">
+        <div class="cv-head">
+          <h3 class="cv-group">Expériences professionnelles</h3>
+          <span class="cv-count">5 postes</span>
         </div>
-
-        <div class="ex-item">
-          <div class="ex-date">Déc. 2024 — Fév. 2025 · Freelance</div>
-          <div class="ex-role">Développeur WordPress</div>
-          <div class="ex-company">Mayamen Marketing <span class="ex-badge">Remote · Paris</span></div>
-          <p class="ex-desc">Analyse des besoins, configuration WordPress, design responsive, déploiement.</p>
+        <div class="cv-list">
+        <div class="cv-row reveal">
+          <div class="cv-date">
+            <span class="cv-when">Août 2025 - Aujourd'hui</span>
+            <span class="cv-dur" data-start="2025-08"></span>
+          </div>
+          <div class="cv-main">
+            <h4 class="cv-role">Chef de Projet Digital</h4>
+            <div class="cv-org">Altavia Foundation</div>
+            <ul class="cv-missions">
+              <li>Animation d'ateliers utilisateurs pour recueillir, prioriser et transformer les besoins en actions concrètes</li>
+              <li>Conception et optimisation de l'expérience utilisateur</li>
+              <li>Développement et intégration de nouvelles fonctionnalités sur la plateforme Microco.com avec Webflow</li>
+              <li>Conception, planification et diffusion de newsletters, avec suivi et analyse des performances des campagnes</li>
+              <li>Réalisation de reporting et analyses KPI afin de proposer des recommandations stratégiques adaptées</li>
+              <li>Coordination et suivi des échanges avec des prestataires externes pour garantir le bon déroulement des projets digitaux</li>
+              <li>Mise en place et suivi de stratégies SEO et SEA afin d'améliorer la visibilité et la performance du site</li>
+            </ul>
+          </div>
+          <div class="cv-meta"><span>Alternance</span><span>Saint-Ouen</span></div>
         </div>
-
-        <div class="ex-item">
-          <div class="ex-date">Sept. 2023 — Sept. 2024 · Alternance</div>
-          <div class="ex-role">Webmaster</div>
-          <div class="ex-company">TresOrient <span class="ex-badge">Lognes</span></div>
-          <p class="ex-desc">Maintenance WordPress/Elementor, maquettes Figma, responsive design, optimisation SEO.</p>
+        <div class="cv-row reveal">
+          <div class="cv-date">
+            <span class="cv-when">Déc. 2024 - Fév. 2025</span>
+            <span class="cv-dur" data-start="2024-12" data-end="2025-02"></span>
+          </div>
+          <div class="cv-main">
+            <h4 class="cv-role">Développeur WordPress</h4>
+            <div class="cv-org">Mayamen Marketing Management</div>
+            <ul class="cv-missions">
+              <li>Analyse des besoins et rédaction d'un cahier des charges</li>
+              <li>Création des pages, intégration de contenus et design responsive</li>
+              <li>Réalisation de tests et déploiement du site en ligne</li>
+              <li>Création et configuration d'un formulaire de contact fonctionnel</li>
+              <li>Installation, configuration et personnalisation de WordPress (thème et plugins)</li>
+            </ul>
+          </div>
+          <div class="cv-meta"><span>Freelance</span><span>À distance · Paris</span></div>
         </div>
-
-        <div class="ex-item">
-          <div class="ex-date">Avr. — Juin 2023 · Stage</div>
-          <div class="ex-role">Assistant Chef de Projet</div>
-          <div class="ex-company">MADRIR Groupe <span class="ex-badge">Villeneuve-la-Garenne</span></div>
-          <p class="ex-desc">UX research, conception UI Figma + Elementor, gestion e-commerce Prestashop.</p>
+        <div class="cv-row reveal">
+          <div class="cv-date">
+            <span class="cv-when">Sept. 2023 - Sept. 2024</span>
+            <span class="cv-dur" data-start="2023-09" data-end="2024-09"></span>
+          </div>
+          <div class="cv-main">
+            <h4 class="cv-role">Webmaster</h4>
+            <div class="cv-org">TresOrient</div>
+            <ul class="cv-missions">
+              <li>Création de maquettes prototypées sur Figma</li>
+              <li>Optimisation du responsive</li>
+              <li>Maintenance et mise à jour du site e-commerce de TresOrient (via WordPress et Elementor)</li>
+              <li>Recherche utilisateur en quête d'améliorations et de fonctionnalités</li>
+              <li>Optimisation du SEO</li>
+            </ul>
+          </div>
+          <div class="cv-meta"><span>Alternance</span><span>Lognes</span></div>
         </div>
-
-        <div class="ex-item">
-          <div class="ex-date">Juin — Juil. 2022 · Stage</div>
-          <div class="ex-role">Graphiste</div>
-          <div class="ex-company">MADRIR Groupe <span class="ex-badge">Villeneuve-la-Garenne</span></div>
-          <p class="ex-desc">Création graphique Photoshop pour e-commerce, cohérence visuelle de la charte.</p>
+        <div class="cv-row reveal">
+          <div class="cv-date">
+            <span class="cv-when">Avr. - Juin 2023</span>
+            <span class="cv-dur" data-start="2023-04" data-end="2023-06"></span>
+          </div>
+          <div class="cv-main">
+            <h4 class="cv-role">Assistant Chef de Projet Web</h4>
+            <div class="cv-org">MADRIR Groupe</div>
+            <ul class="cv-missions">
+              <li>Étude de marché et veille concurrentielle</li>
+              <li>Analyse des besoins et création de parcours utilisateurs (UX)</li>
+              <li>Conception et optimisation de l'interface utilisateur du site vitrine sur Figma</li>
+              <li>Intégration des maquettes sur WordPress via Elementor</li>
+              <li>Mise à jour des catalogues produits des sites e-commerce via Prestashop</li>
+            </ul>
+          </div>
+          <div class="cv-meta"><span>Stage</span><span>Villeneuve-la-Garenne</span></div>
+        </div>
+        <div class="cv-row reveal">
+          <div class="cv-date">
+            <span class="cv-when">Juin - Juil. 2022</span>
+            <span class="cv-dur" data-start="2022-06" data-end="2022-07"></span>
+          </div>
+          <div class="cv-main">
+            <h4 class="cv-role">Graphiste</h4>
+            <div class="cv-org">MADRIR Groupe</div>
+            <ul class="cv-missions">
+              <li>Création d'éléments graphiques avec Photoshop pour le site e-commerce en respectant la charte graphique existante</li>
+              <li>Garantir la cohérence visuelle des images de produits</li>
+            </ul>
+          </div>
+          <div class="cv-meta"><span>Stage</span><span>Villeneuve-la-Garenne</span></div>
+        </div>
         </div>
       </div>
 
-      <!-- Colonne droite : Formation -->
-      <div>
-        <div class="ex-col-title" style="color: var(--cyan);">Formation</div>
-
-        <div class="edu-item">
-          <div class="ex-date">Sept. 2025 — 2027 · En cours</div>
-          <div class="ex-role">Mastère Product Design UX-UI</div>
-          <div class="ex-company">IIM Digital School</div>
+      <div class="cv-block cv-edu">
+        <div class="cv-head">
+          <h3 class="cv-group">Formation</h3>
+          <span class="cv-count">3 cursus</span>
         </div>
-
-        <div class="edu-item">
-          <div class="ex-date">Sept. — Déc. 2024</div>
-          <div class="ex-role">Mastère UX Design</div>
-          <div class="ex-company">EFREI Paris</div>
+        <div class="cv-list">
+        <div class="cv-row reveal">
+          <div class="cv-date">
+            <span class="cv-when">Sept. 2025 - 2027</span>
+          </div>
+          <div class="cv-main">
+            <h4 class="cv-role">Mastère Product Design UX-UI</h4>
+            <div class="cv-org">IIM Digital School</div>
+          </div>
+          <div class="cv-meta"><span>En cours</span></div>
         </div>
-
-        <div class="edu-item">
-          <div class="ex-date">Sept. 2021 — Sept. 2024 · Diplôme validé</div>
-          <div class="ex-role">B.U.T Métiers du Multimédia et de l'Internet</div>
-          <div class="ex-company">Université Gustave Eiffel</div>
+        <div class="cv-row reveal">
+          <div class="cv-date">
+            <span class="cv-when">Sept. - Déc. 2024</span>
+          </div>
+          <div class="cv-main">
+            <h4 class="cv-role">Mastère UX Design</h4>
+            <div class="cv-org">EFREI Paris</div>
+          </div>
+          <div class="cv-meta"></div>
+        </div>
+        <div class="cv-row reveal">
+          <div class="cv-date">
+            <span class="cv-when">Sept. 2021 - Sept. 2024</span>
+          </div>
+          <div class="cv-main">
+            <h4 class="cv-role">B.U.T Métiers du Multimédia et de l'Internet</h4>
+            <div class="cv-org">Université Gustave Eiffel</div>
+          </div>
+          <div class="cv-meta"><span>Diplôme validé</span></div>
+        </div>
         </div>
       </div>
 

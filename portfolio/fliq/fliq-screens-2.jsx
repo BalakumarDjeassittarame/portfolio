@@ -506,7 +506,7 @@ function Screen10ChatList() {
 // ── Screen 11 — Open conversation ─────────────────────────
 const messages = [
   { from: 'them', text: 'Hey!! Your profile is really interesting 😊', time: '14:02' },
-  { from: 'me', text: "Haha thank you! Yours too \u2014 love that you hike, I've been wanting to do the Brecon Beacons \uD83C\uDFD4\uFE0F", time: '14:05' },
+  { from: 'me', text: "Haha thank you! Yours too, love that you hike, I've been wanting to do the Brecon Beacons \uD83C\uDFD4\uFE0F", time: '14:05' },
   { from: 'them', text: "Oh yes!! I did it last spring, it was absolutely stunning. Did you do any hiking recently?", time: '14:07' },
   { from: 'me', text: "Not recently but I'm planning a trip to Scotland in August \uD83C\uDF3F", time: '14:09' },
   { from: 'them', text: 'That chai place near Borough Market is 🔥', time: '14:12' },
